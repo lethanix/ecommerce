@@ -1,16 +1,17 @@
 export class Product {
+  #id;
   #title;
   #description;
   #price;
   #thumbnail;
   #code;
   #stock;
-  #id;
 
   static #requiredProperties = ["title", "description", "price", "thumbnail", "code", "stock"];
 
-  constructor({ title, description, price, thumbnail, code, stock }) {
+  constructor({ id, title, description, price, thumbnail, code, stock }) {
     const tmpObject = {
+      id,
       title,
       description,
       price,

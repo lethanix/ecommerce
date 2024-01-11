@@ -1,10 +1,11 @@
-import { Product } from "../model/Product.js";
+import { Product } from "./product.js";
+import { FsProductRepository } from "./product.fs.repository.js";
 
 export class ProductManager {
   static #id = 0;
   #products;
 
-  constructor() {
+  constructor(productRepository) {
     this.#products = [];
   }
 
