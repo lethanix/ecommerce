@@ -1,4 +1,4 @@
-import { Product } from "./Product.js";
+import { Product } from "../model/Product.js";
 
 export class ProductManager {
   static #id = 0;

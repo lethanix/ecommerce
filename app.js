@@ -1,5 +1,5 @@
-import { ProductManager } from "./ProductManager.js";
-import { Product } from "./Product.js";
+import { ProductManager } from "./src/controller/ProductManager.js";
+import { Product } from "./src/model/Product.js";
 
 try {
 
