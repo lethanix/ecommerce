@@ -7,6 +7,7 @@ export class Product {
   #code;
   #stock;
 
+  static #productsCreated = 0;
   static #requiredProperties = ["title", "description", "price", "thumbnail", "code", "stock"];
 
   constructor({ id, title, description, price, thumbnail, code, stock }) {
@@ -31,7 +32,8 @@ export class Product {
     this.#thumbnail = thumbnail;
     this.#code = code;
     this.#stock = stock;
-    this.#id = 0;
+    // Unique id is needed
+    this.#id = id ?? Product.#productsCreated++;
   }
 
   get title() {

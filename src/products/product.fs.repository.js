@@ -1,6 +1,5 @@
+import { ProductRepository } from "./product.repository.js";
 
-export class FsProductRepository {
-    async getProductById(id) {
+export class ProductFsRepository extends ProductRepository {
 
-    }
 }
