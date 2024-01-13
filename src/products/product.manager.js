@@ -1,10 +1,15 @@
 import { Product } from "./product.js";
+import { ProductMemoryRepository } from "./product.memory.repository.js";
 
 export class ProductManager {
   static #id = 0;
   #products;
+  #repository;
 
-  constructor() {
+  constructor(repositoryType) {
+    if (repositoryType === "MEMORY") {
+      this.#repository = new ProductMemoryRepository();
+    }
     this.#products = [];
   }
 

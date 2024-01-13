@@ -1,9 +1,14 @@
 import { ProductManager } from "./products/product.manager.js";
 import { Product } from "./products/product.js";
 
+// Load environment variables from .env
+import "dotenv/config.js";
+
+const REPOSITORY = process.env.REPOSITORY || "MEMORY";
+
 try {
 
-  const manager = new ProductManager();
+  const manager = new ProductManager(REPOSITORY);
   console.log(manager.getProducts());
 
   const testProduct = {

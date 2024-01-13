@@ -4,6 +4,7 @@ export class ProductMemoryRepository extends ProductRepository {
     #products;
 
     constructor() {
+        super();
         this.#products = [];
     }
 
