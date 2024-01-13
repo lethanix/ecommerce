@@ -8,5 +8,8 @@
     "start": "node --watch src/app.js"
   },
   "author": "Lethanix",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
 }
