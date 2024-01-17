@@ -1,5 +1,5 @@
-import { ProductManager } from "./products/product.manager.js";
-import { Product } from "./products/product.js";
+import { ProductManager } from "./src/products/product.manager.js";
+import { Product } from "./src/products/product.js";
 
 //*** Using Node */
 // Load environment variables from .env
