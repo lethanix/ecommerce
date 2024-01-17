@@ -17,21 +17,9 @@ export class ProductMemoryRepository extends ProductRepository {
     };
 
     async getProductById(id) {
-        for (const product of this.#products) {
-            if (id === product.id) return product.toJSON();
-        }
+        const product = this.#products.find(p => p.id === id);
 
-        return null;
+        return product || null;
     };
 
-
-    #isCodeUnique(code) {
-        if (this.#products.length === 0) {
-            return true;
-        }
-
-        for (const product of this.#products) {
-            return code === product.code ? false : true;
-        }
-    }
 }
