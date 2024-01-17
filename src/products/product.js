@@ -77,4 +77,8 @@ export class Product {
     
     return JSON.parse(tmp);
   }
+
+  toString() {
+    return JSON.stringify(this);
+  }
 }
