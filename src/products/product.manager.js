@@ -1,3 +1,4 @@
+import { ProductFsRepository } from "./product.fs.repository.js";
 import { Product } from "./product.js";
 import { ProductMemoryRepository } from "./product.memory.repository.js";
 
@@ -7,6 +8,10 @@ export class ProductManager {
   constructor(repositoryType) {
     if (repositoryType === "MEMORY") {
       this.#repository = new ProductMemoryRepository();
+    }
+
+    if (repositoryType === "FS") {
+      this.#repository = new ProductFsRepository("fs.repository.db");
     }
   }
 
@@ -35,7 +40,13 @@ export class ProductManager {
   }
 
   async getProductById(id) {
-    return await this.#repository.getProductById(id);
+    const product = await this.#repository.getProductById(id);
+
+    if (product === null) {
+      throw new Error(`Unable to retrieve product with id ${id}`);
+    }
+
+    return product;
   }
 
   async #isCodeUnique(code) {
@@ -43,5 +54,13 @@ export class ProductManager {
     const codeFound = products.some((p) => p.code === code);
 
     return !codeFound;
+  }
+
+  async updateProduct(product) {
+    await this.#repository.updateProduct(product);
+  }
+
+  async deleteProduct(id) {
+    await this.#repository.deleteProduct(id);
   }
 }

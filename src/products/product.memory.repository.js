@@ -13,12 +13,14 @@ export class ProductMemoryRepository extends ProductRepository {
   }
 
   async getProducts() {
-    return [...this.#products];
+    let productsJSON = JSON.stringify(this.#products);
+    productsJSON = JSON.parse(productsJSON);
+    return [...productsJSON];
   }
 
   async getProductById(id) {
     const product = this.#products.find((p) => p.id === id);
 
-    return product || null;
+    return product.toJSON() || null;
   }
 }

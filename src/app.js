@@ -1,5 +1,5 @@
-import { ProductManager } from "./src/products/product.manager.js";
-import { Product } from "./src/products/product.js";
+import { ProductManager } from "./products/product.manager.js";
+import { Product } from "./products/product.js";
 
 //*** Using Node */
 // Load environment variables from .env
@@ -15,6 +15,7 @@ const REPOSITORY = process.env.REPOSITORY || "MEMORY";
 // const REPOSITORY = env["REPOSITORY"];
 
 try {
+  console.log("Repository type: " + REPOSITORY);
   const manager = new ProductManager(REPOSITORY);
   console.log(await manager.getProducts());
 
@@ -41,14 +42,30 @@ try {
   // await manager.addProduct(newProduct); // throws error of the code
   await manager.addProduct(newProduct2);
 
-  //
-  const product = await manager.getProductById(0);
-  console.table(product.toJSON());
+  const product = await manager.getProductById(1);
+  console.table(product);
 
-  // const products = await manager.getProducts();
-  // products.forEach(p => {
-  //   console.table(p.toJSON());
-  // });
+  let products = await manager.getProducts();
+  console.table(products);
+
+  const valuesToUpdate = {
+    id: 1, // Update the product with this id
+    title: "Product updated",
+    description: "Real product",
+    price: 370,
+    thumbnail: "Coming soon",
+    code: "12345",
+    stock: 11,
+  };
+
+  const productToUpdate = new Product(valuesToUpdate);
+  await manager.updateProduct(productToUpdate);
+  products = await manager.getProducts();
+  console.table(products);
+
+  await manager.deleteProduct(0);
+  products = await manager.getProducts();
+  console.table(products);
 } catch (error) {
   console.log(error);
 }
