@@ -1,25 +1,24 @@
 import { ProductRepository } from "./product.repository.js";
 
 export class ProductMemoryRepository extends ProductRepository {
-    #products;
+  #products;
 
-    constructor() {
-        super();
-        this.#products = [];
-    }
+  constructor() {
+    super();
+    this.#products = [];
+  }
 
-    async addProduct(newProduct) {
-        this.#products.push(newProduct);
-    };
+  async addProduct(newProduct) {
+    this.#products.push(newProduct);
+  }
 
-    async getProducts() {
-        return [...this.#products];
-    };
+  async getProducts() {
+    return [...this.#products];
+  }
 
-    async getProductById(id) {
-        const product = this.#products.find(p => p.id === id);
+  async getProductById(id) {
+    const product = this.#products.find((p) => p.id === id);
 
-        return product || null;
-    };
-
+    return product || null;
+  }
 }

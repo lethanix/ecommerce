@@ -14,13 +14,17 @@ export class ProductManager {
     // Only instances of Product class can be added
     const isValid = newProduct instanceof Product;
     if (!isValid) {
-      throw new Error("Unable to add new product to ProductManager: newProduct is not an instance of Product");
+      throw new Error(
+        "Unable to add new product to ProductManager: newProduct is not an instance of Product",
+      );
     }
 
-    // Unique code is needed for each product 
+    // Unique code is needed for each product
     const isUnique = await this.#isCodeUnique(newProduct.code);
     if (!isUnique) {
-      throw new Error(`Unable to add new product to ProductManager: Code ${newProduct.code} is not unique.`);
+      throw new Error(
+        `Unable to add new product to ProductManager: Code ${newProduct.code} is not unique.`,
+      );
     }
 
     await this.#repository.addProduct(newProduct);
@@ -36,7 +40,7 @@ export class ProductManager {
 
   async #isCodeUnique(code) {
     const products = await this.#repository.getProducts();
-    const codeFound = products.some(p => p.code === code);
+    const codeFound = products.some((p) => p.code === code);
 
     return !codeFound;
   }
