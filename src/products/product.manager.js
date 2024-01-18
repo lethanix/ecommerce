@@ -5,13 +5,13 @@ import { ProductMemoryRepository } from "./product.memory.repository.js";
 export class ProductManager {
   #repository;
 
-  constructor(repositoryType) {
+  constructor(repositoryType, dataFilename = "") {
     if (repositoryType === "MEMORY") {
       this.#repository = new ProductMemoryRepository();
     }
 
     if (repositoryType === "FS") {
-      this.#repository = new ProductFsRepository("fs.repository.db");
+      this.#repository = new ProductFsRepository(dataFilename);
     }
   }
 

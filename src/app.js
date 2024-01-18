@@ -1,72 +1,51 @@
 import { ProductManager } from "./products/product.manager.js";
 import { Product } from "./products/product.js";
 import express from "express";
+import "dotenv/config.js"; // Load environment variables from .env
 
-//*** Using Node */
-// Load environment variables from .env
-import "dotenv/config.js";
+const REPOSITORY = process.env.REPOSITORY || "FS";
+const MOCK_DATA = process.env.MOCK_DATA || "MOCK_DATA.json";
 
-const REPOSITORY = process.env.REPOSITORY || "MEMORY";
+const app = express();
+const PORT = 8080;
 
-//*** Using Deno */
-// Load environment variables from .env
-// import { load } from "https://deno.land/std@0.212.0/dotenv/mod.ts";
+const manager = new ProductManager(REPOSITORY, MOCK_DATA);
 
-// const env = await load();
-// const REPOSITORY = env["REPOSITORY"];
+app.get("/products", async (req, res) => {
+  try {
+    const products = await manager.getProducts();
 
-try {
-  console.log("Repository type: " + REPOSITORY);
-  const manager = new ProductManager(REPOSITORY);
-  console.log(await manager.getProducts());
+    let { limit } = req.query;
 
-  const testProduct = {
-    // id: 1234,
-    title: "Product test",
-    description: "An imaginary product",
-    price: 200,
-    thumbnail: "Go to Pinterest",
-    code: "T03XY9L",
-    stock: 25,
-  };
+    if (limit) {
+      const limitedProducts = products.filter((_, idx) => idx < limit);
+      res.send(limitedProducts);
+      return;
+    }
 
-  const testProduct2 = { ...testProduct };
-  testProduct2.code = "B57LM4X";
+    res.send(products);
 
-  // Create products
-  const newProduct = new Product(testProduct);
-  const newProduct2 = new Product(testProduct2);
-  // console.table(newProduct.toJSON());
+  } catch (error) {
+    res.send({ error: `Unable to load products` });
+    console.log(error);
+  }
 
-  // Add new products
-  await manager.addProduct(newProduct);
-  // await manager.addProduct(newProduct); // throws error of the code
-  await manager.addProduct(newProduct2);
+});
 
-  const product = await manager.getProductById(1);
-  console.table(product);
+app.get("/products/:pid", async (req, res) => {
+  let pid = Number(req.params.pid);
+  let product;
+  try {
+    product = await manager.getProductById(pid);
+    res.send(product);
+  } catch (error) {
+    res.send({ error: `Unable to find product with id ${pid}` });
+    console.log(error);
+  }
 
-  let products = await manager.getProducts();
-  console.table(products);
+});
 
-  const valuesToUpdate = {
-    id: 1, // Update the product with this id
-    title: "Product updated",
-    description: "Real product",
-    price: 370,
-    thumbnail: "Coming soon",
-    code: "12345",
-    stock: 11,
-  };
+app.listen(PORT, () => {
+  console.log(`Server listing port ${PORT}`);
+})
 
-  const productToUpdate = new Product(valuesToUpdate);
-  await manager.updateProduct(productToUpdate);
-  products = await manager.getProducts();
-  console.table(products);
-
-  await manager.deleteProduct(0);
-  products = await manager.getProducts();
-  console.table(products);
-} catch (error) {
-  console.log(error);
-}

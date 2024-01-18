@@ -1,7 +1,6 @@
 import { ProductRepository } from "./product.repository.js";
 import * as fs from "node:fs/promises";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { Product } from "./product.js";
 
 export class ProductFsRepository extends ProductRepository {
   #filepath;
@@ -20,9 +19,11 @@ export class ProductFsRepository extends ProductRepository {
       mkdirSync(this.#BASEPATH, { recursive: true });
     }
 
-    // Create an file with an empty array
+    // Create an file with an empty array if it does not exists
     this.#filepath = this.#BASEPATH + filename;
-    writeFileSync(this.#filepath, JSON.stringify([]));
+    if (!existsSync(this.#filepath)) {
+      writeFileSync(this.#filepath, JSON.stringify([]));
+    }
   }
 
   async addProduct(newProduct) {
