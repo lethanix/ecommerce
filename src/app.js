@@ -1,5 +1,6 @@
 import { ProductManager } from "./products/product.manager.js";
 import { Product } from "./products/product.js";
+import express from "express";
 
 //*** Using Node */
 // Load environment variables from .env
