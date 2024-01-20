@@ -19,7 +19,10 @@
 
           nativeBuildInputs = builtins.attrValues {
             inherit (pkgs)
+              curl
+              jq
               nodejs_20
+              deno
               watchexec;
           };
 
