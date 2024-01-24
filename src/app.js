@@ -17,30 +17,32 @@ app.get("/products", async (req, res) => {
   try {
     const products = await manager.getProducts();
 
-    const { limit } = req.query;
+    // No limit value provided. Return all products.
+    if (Object.keys(req.query).length === 0) return res.json(products);
 
-    if (limit) {
-      const limitedProducts = products.filter((_, idx) => idx < limit);
-      res.send(limitedProducts);
-      return;
+    // Verify if there is character different from a digit 
+    const limit = req.query.limit;
+    const regex = /\D+/g;
+    if (limit.match(regex)) {
+      return res.status(400).send({ status: "Error", error: `Limit is not a valid number: ${limit}` });
     }
 
-    res.send(products);
-  } catch (error) {
-    res.send({ error: `Unable to load products` });
-    console.log(error);
+    const limitedProducts = products.slice(0, limit)
+    res.json(limitedProducts);
+
+  } catch (productsError) {
+    return res.status(400).send({ status: "Error", error: `${productsError}` })
   }
+
 });
 
-app.get("/products/:pid", async (req, res) => {
+app.get("/products/:pid(\\d+)", async (req, res) => {
   const pid = Number(req.params.pid);
-  let product;
   try {
-    product = await manager.getProductById(pid);
-    res.send(product);
-  } catch (error) {
-    res.send({ error: `Unable to find product with id ${pid}` });
-    console.log(error);
+    const product = await manager.getProductById(pid);
+    res.json(product);
+  } catch (productIdError) {
+    return res.status(400).send({ status: "Error", error: `${productIdError}` })
   }
 });
 
