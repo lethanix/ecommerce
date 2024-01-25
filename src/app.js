@@ -4,8 +4,8 @@ import "dotenv/config.js"; // Load environment variables from .env
 
 const REPOSITORY = process.env.REPOSITORY || "FS";
 const MOCK_DATA = process.env.MOCK_DATA || "MOCK_DATA.json";
+const PORT = Number(process.env.PORT || 8080);
 
-const PORT = 8080;
 const app = express();
 
 app.use(express.json());
