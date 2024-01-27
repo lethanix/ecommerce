@@ -9,7 +9,7 @@
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        name = "stream-lethanix";
+        name = "nodejs-backend";
         pkgs = nixpkgs.legacyPackages.${system};
       in
       with pkgs;
