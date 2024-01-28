@@ -6,18 +6,22 @@ export class Product {
   #thumbnail;
   #code;
   #stock;
+  #status;
+  #category;
 
   static #productsCreated = 0;
   static #requiredProperties = [
     "title",
     "description",
     "price",
-    "thumbnail",
+    // "thumbnail",
     "code",
     "stock",
+    "status",
+    "category",
   ];
 
-  constructor({ id, title, description, price, thumbnail, code, stock }) {
+  constructor({ id, title, description, price, thumbnail, code, stock, status, category }) {
     const tmpObject = {
       id,
       title,
@@ -26,6 +30,8 @@ export class Product {
       thumbnail,
       code,
       stock,
+      status,
+      category,
     };
 
     const isValid = Product.#requiredProperties.every((property) =>
@@ -45,6 +51,8 @@ export class Product {
     this.#thumbnail = thumbnail;
     this.#code = code;
     this.#stock = stock;
+    this.#status = status ?? true;
+    this.#category = category;
   }
 
   get title() {
@@ -71,6 +79,14 @@ export class Product {
     return this.#id;
   }
 
+  get status() {
+    return this.#status;
+  }
+
+  get category() {
+    return this.#category;
+  }
+
   set id(uniqueID) {
     this.#id = uniqueID;
   }
@@ -85,6 +101,8 @@ export class Product {
         thumbnail: this.#thumbnail,
         code: this.#code,
         stock: this.#stock,
+        status: this.#status,
+        category: this.#category,
       },
       null,
       4,
