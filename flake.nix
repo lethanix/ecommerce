@@ -14,19 +14,25 @@
       in
       with pkgs;
       {
-        devShells.default = mkShell {
-          inherit name;
+        devShells.default = mkShell
+          {
+            inherit name;
 
-          nativeBuildInputs = builtins.attrValues {
-            inherit (pkgs)
-              curl
-              jq
-              nodejs_20
-              deno
-              watchexec;
+            nativeBuildInputs = builtins.attrValues {
+              inherit (pkgs)
+                curl
+                jq
+                nodejs_20
+                deno
+                watchexec;
+            };
+
+            env = {
+              PORT = 3030;
+              REPOSITORY = "FS";
+            };
+
           };
-
-        };
       }
     );
 }
