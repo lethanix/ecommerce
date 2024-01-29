@@ -1,4 +1,5 @@
 import { ProductManager } from "./product.manager.js";
+import { Product } from "./product.js";
 import process from "node:process"
 import express from "express";
 import "dotenv/config.js"; // Load environment variables from .env
@@ -40,7 +41,31 @@ router.get("/:pid(\\d+)", async (req, res) => {
     const product = await manager.getProductById(pid);
     res.json(product);
   } catch (productIdError) {
-    return res.status(400).send({ status: "Error", error: `${productIdError}` })
+    return res.status(400).send({ status: "Error", error: `${productIdError}` });
   }
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const product = new Product(req.body);
+    await manager.addProduct(product);
+
+    res.status(200).send({ status: "Successful", message: "Product added" });
+
+  } catch (addProductError) {
+    return res.status(400).send({ status: "Error", error:`${addProductError}`});
+  }
+});
+
+router.put("/:pid(\\d+)", async (req, res) => {
+  const pid = Number(req.params.pid);
+  req.body.id = pid;
+
+  console.log(req.body)
+
+  try {
+    res.status(200).send({ status: "Successful", message: "Product updated" });
+  } catch (updateProductError) {
+    return res.status(400).send({ status: "Error", message: `${updateProductError}`});
+  }
+});
