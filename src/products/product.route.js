@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
     res.status(200).send({ status: "Successful", message: "Product added" });
 
   } catch (addProductError) {
-    return res.status(400).send({ status: "Error", error:`${addProductError}`});
+    return res.status(400).send({ status: "Error", error: `${addProductError}` });
   }
 });
 
@@ -61,11 +61,29 @@ router.put("/:pid(\\d+)", async (req, res) => {
   const pid = Number(req.params.pid);
   req.body.id = pid;
 
-  console.log(req.body)
-
   try {
-    res.status(200).send({ status: "Successful", message: "Product updated" });
+    const product = await manager.getProductById(pid);
+    const tmp = { ...product, ...req.body };
+    const update = new Product(tmp);
+    await manager.updateProduct(update);
+
+    const updated = await manager.getProductById(pid);
+    res.status(200).send({ status: "Successful", message: "Product updated", product: updated });
+
   } catch (updateProductError) {
-    return res.status(400).send({ status: "Error", message: `${updateProductError}`});
+    return res.status(400).send({ status: "Error", message: `${updateProductError}` });
   }
+});
+
+router.delete("/:pid(\\d+)", async (req, res) => {
+  const pid = Number(req.params.pid);
+  
+  try {
+    await manager.deleteProduct(pid);  
+    res.status(200).send({ status: "Successful", message: "Product deleted" });
+
+  } catch (deleteProductError) {
+    return res.status(400).send({ status: "Error", message: `${updateProductError}` });
+  }
+
 });
