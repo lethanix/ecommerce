@@ -1,4 +1,5 @@
 # IDE or text editors
+.idea/
 .idx/
 .vscode/
 
