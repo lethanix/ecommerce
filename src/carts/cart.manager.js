@@ -1,5 +1,4 @@
-
 export class CartManager {
-    addProduct(product) {};
-    getProducts() {};
-};
+  addProduct(product) {}
+  getProducts() {}
+}

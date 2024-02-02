@@ -21,7 +21,17 @@ export class Product {
     "category",
   ];
 
-  constructor({ id, title, description, price, thumbnail, code, stock, status, category }) {
+  constructor({
+    id,
+    title,
+    description,
+    price,
+    thumbnail,
+    code,
+    stock,
+    status,
+    category,
+  }) {
     const tmpObject = {
       id,
       title,
@@ -34,8 +44,8 @@ export class Product {
       category,
     };
 
-    const isValid = Product.#requiredProperties.every((property) =>
-      tmpObject[property] !== undefined
+    const isValid = Product.#requiredProperties.every(
+      (property) => tmpObject[property] !== undefined,
     );
     if (!isValid) {
       throw new Error(

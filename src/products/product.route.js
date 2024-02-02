@@ -1,6 +1,6 @@
 import { ProductManager } from "./product.manager.js";
 import { Product } from "./product.js";
-import process from "node:process"
+import process from "node:process";
 import express from "express";
 import "dotenv/config.js"; // Load environment variables from .env
 
@@ -18,20 +18,23 @@ router.get("/", async (req, res) => {
     // No limit value provided. Return all products.
     if (Object.keys(req.query).length === 0) return res.json(products);
 
-    // Verify if there is character different from a digit 
+    // Verify if there is character different from a digit
     const limit = req.query.limit;
     const regex = /\D+/g;
     if (limit.match(regex)) {
-      return res.status(400).send({ status: "Error", error: `Limit is not a valid number: ${limit}` });
+      return res
+        .status(400)
+        .send({
+          status: "Error",
+          error: `Limit is not a valid number: ${limit}`,
+        });
     }
 
-    const limitedProducts = products.slice(0, limit)
+    const limitedProducts = products.slice(0, limit);
     res.json(limitedProducts);
-
   } catch (productsError) {
-    return res.status(400).send({ status: "Error", error: `${productsError}` })
+    return res.status(400).send({ status: "Error", error: `${productsError}` });
   }
-
 });
 
 router.get("/:pid(\\d+)", async (req, res) => {
@@ -41,7 +44,9 @@ router.get("/:pid(\\d+)", async (req, res) => {
     const product = await manager.getProductById(pid);
     res.json(product);
   } catch (productIdError) {
-    return res.status(400).send({ status: "Error", error: `${productIdError}` });
+    return res
+      .status(400)
+      .send({ status: "Error", error: `${productIdError}` });
   }
 });
 
@@ -51,9 +56,10 @@ router.post("/", async (req, res) => {
     await manager.addProduct(product);
 
     res.status(200).send({ status: "Successful", message: "Product added" });
-
   } catch (addProductError) {
-    return res.status(400).send({ status: "Error", error: `${addProductError}` });
+    return res
+      .status(400)
+      .send({ status: "Error", error: `${addProductError}` });
   }
 });
 
@@ -68,22 +74,29 @@ router.put("/:pid(\\d+)", async (req, res) => {
     await manager.updateProduct(update);
 
     const updated = await manager.getProductById(pid);
-    res.status(200).send({ status: "Successful", message: "Product updated", product: updated });
-
+    res
+      .status(200)
+      .send({
+        status: "Successful",
+        message: "Product updated",
+        product: updated,
+      });
   } catch (updateProductError) {
-    return res.status(400).send({ status: "Error", message: `${updateProductError}` });
+    return res
+      .status(400)
+      .send({ status: "Error", message: `${updateProductError}` });
   }
 });
 
 router.delete("/:pid(\\d+)", async (req, res) => {
   const pid = Number(req.params.pid);
-  
+
   try {
-    await manager.deleteProduct(pid);  
+    await manager.deleteProduct(pid);
     res.status(200).send({ status: "Successful", message: "Product deleted" });
-
   } catch (deleteProductError) {
-    return res.status(400).send({ status: "Error", message: `${updateProductError}` });
+    return res
+      .status(400)
+      .send({ status: "Error", message: `${updateProductError}` });
   }
-
 });

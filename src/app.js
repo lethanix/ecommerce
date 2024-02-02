@@ -1,8 +1,8 @@
-import process from "node:process"
+import process from "node:process";
 import express from "express";
 import "dotenv/config.js"; // Load environment variables from .env
 
-import { router as productRoutes } from "./products/product.route.js"
+import { router as productRoutes } from "./products/product.route.js";
 
 const PORT = Number(process.env.PORT || 8080);
 
