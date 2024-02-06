@@ -22,12 +22,10 @@ router.get("/", async (req, res) => {
     const limit = req.query.limit;
     const regex = /\D+/g;
     if (limit.match(regex)) {
-      return res
-        .status(400)
-        .send({
-          status: "Error",
-          error: `Limit is not a valid number: ${limit}`,
-        });
+      return res.status(400).send({
+        status: "Error",
+        error: `Limit is not a valid number: ${limit}`,
+      });
     }
 
     const limitedProducts = products.slice(0, limit);
@@ -74,13 +72,11 @@ router.put("/:pid(\\d+)", async (req, res) => {
     await manager.updateProduct(update);
 
     const updated = await manager.getProductById(pid);
-    res
-      .status(200)
-      .send({
-        status: "Successful",
-        message: "Product updated",
-        product: updated,
-      });
+    res.status(200).send({
+      status: "Successful",
+      message: "Product updated",
+      product: updated,
+    });
   } catch (updateProductError) {
     return res
       .status(400)

@@ -10,7 +10,7 @@ export class ProductFsRepository extends ProductRepository {
     super();
     if (!filename) {
       throw new Error(
-        "Unable to create file repository: The name of the file is not provided",
+        "Unable to create product repository: The name of the file is not provided",
       );
     }
 

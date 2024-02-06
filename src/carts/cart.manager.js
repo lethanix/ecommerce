@@ -1,4 +1,17 @@
+import { CartFsRepository } from "./cart.fs.repository";
+import { Product } from "../products/product.js";
+
 export class CartManager {
-  addProduct(product) {}
+  #repository;
+  
+  constructor(respositoryType, dataFilename = "") {
+    if (repositoryType === "FS") {
+      this.#repository = new CartFsRepository(dataFilename);
+    }
+  }
+
+  async addProduct(productId) {
+    
+  }
   getProducts() {}
 }
