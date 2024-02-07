@@ -28,7 +28,7 @@
             };
 
             env = {
-              PORT = 3030;
+              PORT = 8080;
               REPOSITORY = "FS";
             };
 

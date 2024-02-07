@@ -16,6 +16,19 @@ export class Cart {
     return [...this.#products];
   }
 
+  toJSON() {
+    const tmp = JSON.stringify(
+      {
+        id: this.#id,
+        products: this.#products,
+      },
+      null,
+      4,
+    );
+
+    return JSON.parse(tmp);
+  }
+
   toString() {
     return JSON.stringify(this);
   }

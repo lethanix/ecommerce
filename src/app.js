@@ -3,6 +3,7 @@ import express from "express";
 import "dotenv/config.js"; // Load environment variables from .env
 
 import { router as productRoutes } from "./products/product.route.js";
+import { router as cartRoutes } from "./carts/cart.route.js";
 
 const PORT = Number(process.env.PORT || 8080);
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // const productRoutes = require("./products/product.route");
 app.use("/api/products", productRoutes);
+app.use("/api/carts", cartRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listing port ${PORT}`);
