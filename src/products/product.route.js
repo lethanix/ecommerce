@@ -5,9 +5,9 @@ import express from "express";
 import "dotenv/config.js"; // Load environment variables from .env
 
 const REPOSITORY = process.env.REPOSITORY || "FS";
-const MOCK_DATA = process.env.MOCK_DATA || "MOCK_DATA.json";
+const PRODUCT_DATA = process.env.PRODUCT_DATA || "products.json";
 
-const manager = new ProductManager(REPOSITORY, MOCK_DATA);
+const manager = new ProductManager(REPOSITORY, PRODUCT_DATA);
 
 export const router = express.Router();
 
