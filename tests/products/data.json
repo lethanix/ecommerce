@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "title": "Test product",
     "description": "Product created using curl",
     "code": "testcode123",
@@ -6,4 +7,13 @@
     "status": true,
     "stock": 11,
     "category": "Test"
+=======
+  "title": "Test product",
+  "description": "Product created using curl",
+  "code": "testcode123",
+  "price": 123,
+  "status": true,
+  "stock": 11,
+  "category": "Test"
+>>>>>>> c0c8105 (Add tests using curl)
 }
