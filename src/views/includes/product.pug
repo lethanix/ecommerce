@@ -1,0 +1,11 @@
+tr
+    td #{product.id}
+    td #{product.title}
+    td #{product.price}
+    td #{product.stock}
+    td 
+        span(class="badge bg-secondary") #{product.status}
+    td
+        button(class="btn btn-primary" hx-get=`/edit-form/${product.id}`) EDIT
+    td
+        button(class="btn btn-danger" hx-delete=`/delete/${product.id}`) DELETE

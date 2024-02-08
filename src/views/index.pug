@@ -1,0 +1,36 @@
+DOCTYPE(html)
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Products List
+       
+        //- script(src="https://unpkg.com/hyperscript.org@0.9.11")
+        script(src="https://unpkg.com/htmx.org@1.9.10")
+    body
+        nav(class="flex nav")
+            h1(class="h1 mb-0") Products List
+
+        table(class="table table-striped")
+            thead
+                tr
+                    th(class="table-secondary") ID
+                    th(class="table-secondary") Product
+                    th(class="table-secondary") Price
+                    th(class="table-secondary") Stock
+                    th(class="table-secondary") Active
+                    th(class="table-secondary")
+                    th(class="table-secondary")
+            tbody(id="products" hx-target="closest tr" hx-swap="outerHTML")
+                each product in products
+                    tr
+                        td #{product.id}
+                        td #{product.title}
+                        td #{product.price}
+                        td #{product.stock}
+                        td 
+                            span(class="badge bg-secondary") #{product.status}
+                        td
+                            button(class="btn btn-primary" hx-get=`/edit-form/${product.id}`) EDIT
+                        td
+                            button(class="btn btn-danger" hx-delete=`/delete/${product.id}`) DELETE
