@@ -3,8 +3,11 @@ html(lang='en')
     head
         meta(charset='UTF-8')
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        title Product List
+        title Realtime Product List
        
+        script(src="/socket.io/socket.io.js")
+        script(src="https://unpkg.com/htmx.org@1.9.10")
+        script(src="/javascript/realTimeProducts.js" type="application/javascript")
     body
         nav(class="flex nav")
             h1(class="h1 mb-0") Product List
@@ -28,3 +31,7 @@ html(lang='en')
                         td #{product.stock}
                         td 
                             span(class="badge bg-secondary") #{product.status}
+                        td
+                            button(class="btn btn-primary" hx-get=`/edit-form/${product.id}`) EDIT
+                        td
+                            button(class="btn btn-danger" hx-delete=`/delete/${product.id}`) DELETE
