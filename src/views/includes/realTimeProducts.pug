@@ -6,11 +6,12 @@ html(lang='en')
         title Realtime Product List
        
         script(src="/socket.io/socket.io.js")
-        script(src="https://unpkg.com/htmx.org@1.9.10")
         script(src="/javascript/realTimeProducts.js" type="application/javascript")
     body
         nav(class="flex nav")
             h1(class="h1 mb-0") Product List
+
+        include form.pug
 
         table(class="table table-striped")
             thead
@@ -22,7 +23,8 @@ html(lang='en')
                     th(class="table-secondary") Active
                     th(class="table-secondary")
                     th(class="table-secondary")
-            tbody(id="products" hx-target="closest tr" hx-swap="outerHTML")
+
+            tbody(id="products")
                 each product in products
                     tr
                         td #{product.id}

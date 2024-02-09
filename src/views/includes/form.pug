@@ -1,0 +1,75 @@
+div(class="container py-4 px-3 mx-auto")
+    form(
+        class="mb-3 needs-validation"
+    )
+        div
+            label(for="title") Product
+            input(
+                placeholder="Product name"
+                type="text"
+                name="title"
+                id="title"
+                class="form-control mb-3"
+                required
+            )
+
+        div
+            label(for="description") Description
+            input(
+                placeholder="Description"
+                type="text"
+                name="description"
+                id="description"
+                class="form-control mb-3"
+                required
+            )
+        div
+            label(for="price") Price
+            input(
+                placeholder="0"
+                type="number"
+                name="price"
+                id="price"
+                min="0"
+                required 
+            )
+        div
+            label(for="code") Code
+            input(
+                placeholder="Code"
+                type="text"
+                name="code"
+                id="code"
+                required
+            )
+        div
+            label(for="stock") Stock
+            input(
+                placeholder="0"
+                type="number"
+                name="stock"
+                id="stock"
+                min="0"
+                required
+            )
+        div
+            label(for="status") Status
+            input(
+                type="checkbox"
+                name="status"
+                id="status"
+                checked
+                required
+            )
+        
+        div
+            label(for="category") Category
+            select(name="category" id="category" class="form-select mb-3" required)
+                option(selected) Choose category
+                option(value="tech") Technology
+                option(value="food") Food
+                option(value="kitchen") Kitchen
+                option(value="other") Other
+
+
+        button(type="submit" class="add-product btn btn-info") Add product
