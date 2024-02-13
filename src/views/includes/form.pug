@@ -1,5 +1,6 @@
 div(class="container py-4 px-3 mx-auto")
     form(
+        id="form"
         class="mb-3 needs-validation"
     )
         div
@@ -59,7 +60,6 @@ div(class="container py-4 px-3 mx-auto")
                 name="status"
                 id="status"
                 checked
-                required
             )
         
         div
@@ -70,6 +70,5 @@ div(class="container py-4 px-3 mx-auto")
                 option(value="food") Food
                 option(value="kitchen") Kitchen
                 option(value="other") Other
-
 
         button(type="submit" class="add-product btn btn-info") Add product

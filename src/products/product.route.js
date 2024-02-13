@@ -93,6 +93,16 @@ router.delete("/:pid(\\d+)", async (req, res) => {
   } catch (deleteProductError) {
     return res
       .status(400)
-      .send({ status: "Error", message: `${updateProductError}` });
+      .send({ status: "Error", message: `${deleteProductError}` });
   }
 });
+
+// Adding socket specifics
+export async function ioAddProduct(values) {
+  try {
+    const product = new Product(values);
+    await manager.addProduct(product);
+  } catch (ioAddProductError) {
+    console.error(`Error: ${ioAddProductError}`);
+  }
+}

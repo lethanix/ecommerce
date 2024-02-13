@@ -33,12 +33,18 @@ const server = app.listen(PORT, () => {
 // Create socker.io server
 const io = new Server(server);
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   console.log("New client connected");
 
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+
+  socket.on("add product", async (product) => {
+    console.log("Product: \n" + JSON.stringify(product));
+
+    let { ioAddProduct } = await import("./products/product.route.js");
+
+    ioAddProduct(product);
   });
 });
-
-

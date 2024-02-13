@@ -13,16 +13,17 @@ const manager = new ProductManager(REPOSITORY, PRODUCT_DATA);
 export const router = express.Router();
 
 /**
- * Render home page 
+ * Render home page
  */
 router.get("/", async (_, res) => {
   try {
     const data = await manager.getProducts();
 
     res.render("index", { products: data });
-
   } catch (getProductsError) {
-    return res.status(400).send({ status: "Error", error: `${getProductsError}` });
+    return res
+      .status(400)
+      .send({ status: "Error", error: `${getProductsError}` });
   }
 });
 
@@ -34,9 +35,9 @@ router.get("/realtimeproducts", async (_, res) => {
 
     const markup = template({ products: data });
     res.send(markup);
-
   } catch (getProductsError) {
-    return res.status(400).send({ status: "Error", error: `${getProductsError}` });
+    return res
+      .status(400)
+      .send({ status: "Error", error: `${getProductsError}` });
   }
-
 });

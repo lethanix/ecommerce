@@ -1,12 +1,23 @@
 const socket = io();
 
-const form = document.getElementById('form');
-const input = document.getElementById('input');
+const form = document.getElementById("form");
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (input.value) {
-        socket.emit("add product", input.value);
-        input.value = '';
-    }
-});
+function handleSubmit(event) {
+  event.preventDefault();
+
+  const data = new FormData(event.target);
+
+  // Create an object with the values to send
+  const product = Object.fromEntries(data.entries());
+  product.price = Number(product.price);
+  product.stock = Number(product.stock);
+  product.status = Boolean(product.status);
+
+  // Clear form values
+  event.target.reset();
+
+  // Send information to server
+  socket.emit("add product", product);
+}
+
+form.addEventListener("submit", handleSubmit);
