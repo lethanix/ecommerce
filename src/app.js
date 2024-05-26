@@ -1,33 +1,21 @@
 import path from "node:path";
 import express from "express";
 import { FileRepository } from "./repositories/file.repository.js";
+import { router as productRoutes } from "./routes/product.route.js";
 import { __dirname } from "./utils.js";
 
 const app = express();
 
 const PORT = Number.parseInt(process.env.PORT) || process.argv[3] || 4000;
 
-app
-	.use(express.static(path.join(__dirname, "public")))
-	.use(express.urlencoded({ extended: true }))
-	.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.get("/", async (req, res) => {
-	try {
-		const repo = new FileRepository("products.json");
-		await repo.addData({ id: 1, info: "important information" });
-		const value = await repo.getDataByIdentifier({ key: "id", value: 1 });
-		console.log(`Identified data: ${JSON.stringify(value)}`);
-	} catch (error) {
-		console.log(`Error in GET / ${error}`);
-	}
-	res.json({ status: "success", msg: "Get request" });
-});
+// Setup routes
+app.use("/api/products", productRoutes);
 
-app.get("/api", (req, res) => {
-	res.json({ msg: "Hello world" });
-});
-
+// Setup server
 app.listen(PORT, () => {
-	console.log(`Listening on http://localhost:${PORT}`);
+	console.log(`Server listening on port ${PORT}`);
 });
