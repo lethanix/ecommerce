@@ -1,61 +1,79 @@
-import { FileRepository } from "../repositories/file.repository.js";
 import { Product } from "../models/product.js";
+import { FileRepository } from "../repositories/file.repository.js";
 
 export class ProductManager {
-  #repository;
+	#repository;
 
-  constructor(dataFilename = "") {
-	  this.#repository = new FileRepository(dataFilename);
-  }
+	constructor(dataFilename = "") {
+		this.#repository = new FileRepository(dataFilename);
+	}
 
-  async addProduct(newProduct) {
-    // Only instances of Product class can be added
-    const isValid = newProduct instanceof Product;
-    if (!isValid) {
-      throw new Error(
-        "Unable to add new product to ProductManager: newProduct is not an instance of Product",
-      );
-    }
+	async addProduct(newProduct) {
+		// Only instances of Product class can be added
+		const isValid = newProduct instanceof Product;
+		if (!isValid) {
+			throw new Error(
+				"Unable to add new product to ProductManager: newProduct is not an instance of Product",
+			);
+		}
 
-    // Unique code is needed for each product
-    const isUnique = await this.#isCodeUnique(newProduct.code);
-    if (!isUnique) {
-      throw new Error(
-        `Unable to add new product to ProductManager: Code ${newProduct.code} is not unique.`,
-      );
-    }
+		// Unique code is needed for each product
+		const isCodeUnique = await this.#isUnique({
+			key: "code",
+			value: newProduct.code,
+		});
+		if (!isCodeUnique) {
+			throw new Error(
+				`Unable to add new product to ProductManager: Code ${newProduct.code} is not unique.`,
+			);
+		}
 
-    await this.#repository.addData(newProduct);
-  }
+		// Unique ID is needed for each product
+		const isIdUnique = await this.#isUnique({
+			key: "id",
+			value: newProduct.id,
+		});
+		if (!isIdUnique) {
+			throw new Error(
+				`Unable to add new product to ProductManager: UUID ${newProduct.code} is not unique.`,
+			);
+		}
 
-  async getProducts() {
-    return await this.#repository.getData();
-  }
+		await this.#repository.addData(newProduct);
+	}
 
-  async getProductById(id) {
-    const product = await this.#repository.getDataByIdentifier({ key: "id", value: id });
+	async getProducts() {
+		return await this.#repository.getData();
+	}
 
-    if (product === null) {
-      throw new Error(`Unable to retrieve product with id ${id}`);
-    }
+	async getProductById(id) {
+		const product = await this.#repository.getDataByIdentifier({
+			key: "id",
+			value: id,
+		});
 
-    return product;
-  }
+		if (product === null) {
+			throw new Error(`Unable to retrieve product with id ${id}`);
+		}
 
-  async #isCodeUnique(code) {
-    const products = await this.#repository.getData();
-    const codeFound = products.some((p) => p.code === code);
+		return product;
+	}
 
-    return !codeFound;
-  }
+	async #isUnique(identifier) {
+		const products = await this.#repository.getData();
+		const productFound = products.some(
+			(p) => p[identifier.key] === identifier.value,
+		);
 
-  async updateProduct(product) {
-	const identifier = {key: product.id.toString(), value: product.id };
-    await this.#repository.updateDataByIdentifier(identifier, product);
+		return !productFound;
+	}
 
-  }
+	async updateProduct(product) {
+		const identifier = { key: "id", value: product.id };
+		await this.#repository.updateDataByIdentifier(identifier, product);
+	}
 
-  async deleteProduct(id) {
-    await this.#repository.deleteDataByIdentifier({ key: "id", value: id});
-  }
+	async deleteProduct(id) {
+		await this.#repository.deleteDataByIdentifier({ key: "id", value: id });
+	}
 }

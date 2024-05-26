@@ -1,6 +1,5 @@
 import path from "node:path";
 import express from "express";
-import { FileRepository } from "./repositories/file.repository.js";
 import { router as productRoutes } from "./routes/product.route.js";
 import { __dirname } from "./utils.js";
 
