@@ -12,12 +12,12 @@
 	},
 	{
 		"id": "a03d80a4-5c9a-48e9-b77e-166dcf06e3c5",
-		"title": "Shampoo",
-		"description": "Herbal",
-		"price": "$40",
+		"title": "Soap",
+		"description": "Grisi",
+		"price": "$15",
 		"thumbnail": [],
-		"code": "HEP2",
-		"stock": 15,
+		"code": "SOAP2",
+		"stock": 80,
 		"status": true,
 		"category": "Personal"
 	}
