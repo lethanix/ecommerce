@@ -1,0 +1,52 @@
+<h1>Realtime Products</h1>
+
+<form id="product-form">
+
+	<label>Title</label>
+    <input name="title">
+    <br/>
+
+	<label>Description</label>
+    <input name="description">
+    <br/>
+
+	<label>Price</label>
+    <input name="price">
+    <br/>
+
+	{{!-- <label>Thumbnails</label>
+    <input name="thumbnails">
+    <br/> --}}
+
+	<label>Code</label>
+    <input name="code">
+    <br/>
+
+	<label>Stock</label>
+    <input name="stock">
+    <br/>
+
+	<label>Status</label>
+    <input name="status">
+    <br/>
+
+	<label>Category</label>
+    <input name="category">
+    <br/>
+
+    {{!-- <input type="file" name="thumbnail" multiple>
+    <br/> --}}
+
+    <input type="submit">
+</form>
+
+<div>
+    <ul>
+        {{#each products}}
+            <li>{{this.title}}</li>
+        {{/each}}
+    </ul>
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="/js/realtime.js"></script>
