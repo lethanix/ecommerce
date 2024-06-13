@@ -1,17 +1,24 @@
+<style>
+    :root {
+        color-scheme: light dark;
+    }
+</style>
+
 <h1>Realtime Products</h1>
 
-<form id="product-form">
+<form id="product-form" >
+<!--<form id="product-form" action="/realtimeproducts" method="post">-->
 
 	<label>Title</label>
-    <input name="title">
+    <input name="title" type="text">
     <br/>
 
 	<label>Description</label>
-    <input name="description">
+    <input name="description" type="text">
     <br/>
 
 	<label>Price</label>
-    <input name="price">
+    <input name="price" type="text">
     <br/>
 
 	{{!-- <label>Thumbnails</label>
@@ -19,25 +26,25 @@
     <br/> --}}
 
 	<label>Code</label>
-    <input name="code">
+    <input name="code" type="text">
     <br/>
 
 	<label>Stock</label>
-    <input name="stock">
+    <input name="stock" type="number">
     <br/>
 
 	<label>Status</label>
-    <input name="status">
+    <input name="status" type="checkbox">
     <br/>
 
 	<label>Category</label>
-    <input name="category">
+    <input name="category" type="text">
     <br/>
 
     {{!-- <input type="file" name="thumbnail" multiple>
     <br/> --}}
 
-    <input type="submit">
+    <input type="submit" name="Submit">
 </form>
 
 <div>

@@ -14,9 +14,8 @@ export class Product {
 		"title",
 		"description",
 		"price",
-		// "thumbnails",
 		"code",
-		"stock",
+		"stock", // "thumbnails",
 		"status",
 		"category",
 	];
