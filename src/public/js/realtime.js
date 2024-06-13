@@ -19,17 +19,15 @@ form.addEventListener("submit", (e) => {
     product.stock = Number(product.stock);
 
     // Send message
-    socket.emit("submit-product", { formData: product });
+    socket.emit("submit-product", { formData: product }, (res) => {
+        if (res.status === "error") {
+            console.error(`Unable to add product from form: ${res.payload}`);
+            return;
+        }
+
+        console.log(`Product:create ${res.payload}`);
+    });
 
     // Clear form
     form.reset();
-})
-
-// Events
-socket.on("new product added", async (data) => {
-    console.log(`New product added: ${JSON.stringify(data, null,"\t")}`);
-});
-
-socket.on("error adding product", async (data) => {
-    console.error(`Unable to add product from form: ${JSON.stringify(data)}`);
 })

@@ -48,9 +48,9 @@
 </form>
 
 <div>
-    <ul>
+    <ul id="list-of-products">
         {{#each products}}
-            <li>{{this.title}}</li>
+            <li>{{this.title}} {{this.id}}</li>
         {{/each}}
     </ul>
 </div>
