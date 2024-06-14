@@ -7,7 +7,6 @@
 <h1>Realtime Products</h1>
 
 <form id="product-form" >
-<!--<form id="product-form" action="/realtimeproducts" method="post">-->
 
 	<label>Title</label>
     <input name="title" type="text">
@@ -47,12 +46,10 @@
     <input type="submit" name="Submit">
 </form>
 
-<div>
-    <ul id="list-of-products">
-        {{#each products}}
-            <li>{{this.title}} {{this.id}}</li>
-        {{/each}}
-    </ul>
+<div id="product-list">
+    {{#each products}}
+        <div data-id={{this.id}}>{{this.title}}</div>
+    {{/each}}
 </div>
 
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
