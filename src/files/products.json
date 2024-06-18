@@ -11,14 +11,47 @@
 		"category": "Personal"
 	},
 	{
-		"id": "66bc92df-7107-469a-b18a-9ccb43d0a56b",
+		"id": "693a2fae-1fa4-447b-9f1f-1e226d786fd9",
 		"title": "iPad",
 		"description": "With calculator",
 		"price": "19000",
 		"thumbnail": [],
 		"code": "CALPAD",
-		"stock": 3,
+		"stock": 8,
 		"status": false,
+		"category": "Technology"
+	},
+	{
+		"id": "1d94d5af-8311-41f9-ac3e-5a1963560621",
+		"title": "iPhone",
+		"description": "Latest device",
+		"price": "26000",
+		"thumbnail": [],
+		"code": "iOS18",
+		"stock": "13",
+		"status": true,
+		"category": "Technology"
+	},
+	{
+		"id": "0b593bd0-da55-4e24-ac0a-14d09f76b188",
+		"title": "Macbook Air",
+		"description": "M3",
+		"price": "30000",
+		"thumbnail": [],
+		"code": "mac3",
+		"stock": "130",
+		"status": true,
+		"category": "Technology"
+	},
+	{
+		"id": "95aec785-0a7a-45d4-9d15-b514394d9717",
+		"title": "PC Gamer",
+		"description": "Master Race",
+		"price": "25000",
+		"thumbnail": [],
+		"code": "pc-4960",
+		"stock": "5",
+		"status": true,
 		"category": "Technology"
 	}
 ]
