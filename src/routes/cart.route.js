@@ -1,11 +1,8 @@
 import express from "express";
-import { CartManager } from "../managers/cart.manager.js";
-import { Cart } from "../models/cart.js";
-
-const CART_DATA = process.env.CART_DATA || "cart.json";
+import { cartService as manager } from "../managers/index.js";
+import { cartModel as Cart } from "../managers/index.js";
 
 export const router = express.Router();
-const manager = new CartManager(CART_DATA);
 
 /**
  * Create new cart
