@@ -8,7 +8,6 @@ export class ProductManager {
 	}
 
 	async addProduct(newProduct) {
-
 		await this.#repository.addData(newProduct);
 		return newProduct;
 	}
@@ -29,7 +28,6 @@ export class ProductManager {
 
 		return product;
 	}
-
 
 	async updateProduct(product) {
 		const identifier = { key: "id", value: product.id };

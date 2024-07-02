@@ -8,7 +8,6 @@ export class ProductManager {
 	}
 
 	async addProduct(newProduct) {
-
 		await this.#repository.addData(newProduct);
 		return newProduct;
 	}
@@ -18,18 +17,19 @@ export class ProductManager {
 	}
 
 	async getProductById(id) {
-		const product = await this.#repository.getDataByIdentifier({
+		const productArray = await this.#repository.getDataByIdentifier({
 			key: "id",
 			value: id,
 		});
 
-		if (product === null) {
+		if (productArray === null) {
 			throw new Error(`Unable to retrieve product with id ${id}`);
 		}
 
+		const product = productArray[0];
+
 		return product;
 	}
-
 
 	async updateProduct(product) {
 		const identifier = { key: "id", value: product.id };

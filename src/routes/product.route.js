@@ -61,8 +61,8 @@ router.post("/", async (req, res) => {
 	}
 });
 
-router.put("/:pid(\\d+)", async (req, res) => {
-	const pid = Number(req.params.pid);
+router.put("/:pid", async (req, res) => {
+	const pid = req.params.pid;
 	req.body.id = pid;
 
 	try {
@@ -84,8 +84,8 @@ router.put("/:pid(\\d+)", async (req, res) => {
 	}
 });
 
-router.delete("/:pid(\\d+)", async (req, res) => {
-	const pid = Number(req.params.pid);
+router.delete("/:pid", async (req, res) => {
+	const pid = req.params.pid;
 
 	try {
 		await manager.deleteProduct(pid);
@@ -93,6 +93,6 @@ router.delete("/:pid(\\d+)", async (req, res) => {
 	} catch (deleteProductError) {
 		return res
 			.status(400)
-			.send({ status: "Error", message: `${updateProductError}` });
+			.send({ status: "Error", message: `${deleteProductError}` });
 	}
 });

@@ -1573,5 +1573,27 @@
 			"https://cdn.dummyjson.com/products/images/groceries/Kiwi/1.png"
 		],
 		"thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Kiwi/thumbnail.png"
+	},
+	{
+		"id": "28dc8c69-6309-417a-8b2c-9166c639ebfb",
+		"title": "Fantastic Metal Mouse",
+		"description": "Shoes",
+		"price": 454.82,
+		"thumbnail": [],
+		"code": "074be162-8aab-41b2-ae63-fe17a87b53c7",
+		"stock": 144,
+		"status": true,
+		"category": "Gorgeous"
+	},
+	{
+		"id": "39ac2b5d-ef66-4575-b895-0fe19efbdb01",
+		"title": "Practical Granite Car",
+		"description": "Pants",
+		"price": 930.62,
+		"thumbnail": [],
+		"code": "ff5be6c3-1669-41a2-b1d6-5f5699dd2c5a",
+		"stock": 86,
+		"status": true,
+		"category": "Jeans"
 	}
 ]
