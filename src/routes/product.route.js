@@ -53,7 +53,13 @@ router.post("/", async (req, res) => {
 		const product = new Product(req.body);
 		await manager.addProduct(product);
 
-		res.status(200).send({ status: "Successful", message: "Product added" });
+		res
+			.status(200)
+			.send({
+				status: "Successful",
+				message: "Product added",
+				productId: product.id,
+			});
 	} catch (addProductError) {
 		return res
 			.status(400)
