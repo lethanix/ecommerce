@@ -11,6 +11,7 @@ export const __dirname = import.meta.dirname;
 export const __filespath = path.join(__dirname, "db");
 
 // Env utils
-export const PRODUCT_DATA = process.env.PRODUCT_DATA || "products.json";
-export const CART_DATA = process.env.CART_DATA || "cart.json";
-export const DB_URL = process.env.DB_URL;
+export const PRODUCT_DATA = process.env.PRODUCT_DATA || "product";
+export const CART_DATA = process.env.CART_DATA || "cart";
+export const ATLAS_URI = process.env.ATLAS_URI;
+export const DB_TYPE = "mongo";
