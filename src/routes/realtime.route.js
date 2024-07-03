@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { productService } from "../managers/index.js";
-import { productModel as Product } from "../managers/index.js";
+import { Product } from "../managers/fs/models/product.js";
 
 export const router = Router();
 

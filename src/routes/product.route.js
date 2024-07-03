@@ -1,6 +1,6 @@
 import express from "express";
 import { productService as manager } from "../managers/index.js";
-import { productModel as Product } from "../managers/index.js";
+import { Product } from "../managers/fs/models/product.js";
 
 export const router = express.Router();
 
@@ -50,15 +50,13 @@ router.get("/:pid", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		const product = new Product(req.body);
-		await manager.addProduct(product);
+		await manager.addProduct(req.body);
 
 		res
 			.status(200)
 			.send({
 				status: "Successful",
 				message: "Product added",
-				productId: product.id,
 			});
 	} catch (addProductError) {
 		return res
@@ -72,16 +70,11 @@ router.put("/:pid", async (req, res) => {
 	req.body.id = pid;
 
 	try {
-		const product = await manager.getProductById(pid);
-		const tmp = { ...product, ...req.body };
-		const update = new Product(tmp);
-		await manager.updateProduct(update);
+		await manager.updateProduct(req.body);
 
-		const updated = await manager.getProductById(pid);
 		res.status(200).send({
 			status: "Successful",
 			message: "Product updated",
-			product: updated,
 		});
 	} catch (updateProductError) {
 		return res

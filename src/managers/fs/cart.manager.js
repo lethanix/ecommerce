@@ -1,5 +1,5 @@
 import { FileRepository } from "../../repositories/file.repository.js";
-import { cartModel as Cart } from "../index.js";
+import { Cart } from "../fs/models/cart.js"
 
 export class CartManager {
 	#repository;

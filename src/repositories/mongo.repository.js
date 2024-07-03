@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { DB_URL } from "../utils.js"
+import { ATLAS_URI } from "../utils.js"
+import { getModel } from "../managers/index.js";
 
 /**
  * Implementation of the MongoRepository class to save data
@@ -8,19 +9,14 @@ import { DB_URL } from "../utils.js"
  * @class
  */
 export class MongoRepository {
-	#collection;
+	#model;
 
 	/**
 	 * @constructor
-	 * @param {string} [collection] The name of the collection containing the products data
+	 * @param {string} [collection] The name of the collection containing the data
 	 */
 	constructor(collection) {
-		if (!collection) {
-			throw new Error(
-				"Unable to connect to the repository: The name of the collection is not provided",
-			);
-		}
-		this.#collection = collection;
+		this.#model = getModel(collection, "mongo");
 		this.init();
 	}
 
@@ -29,175 +25,127 @@ export class MongoRepository {
 	 *
 	 */
 	init() {
-		const connection = mongoose.connect(DB_URL);
+		try {
+			const connection = mongoose.connect(ATLAS_URI);
+		} catch (mongoConnectionError) {
+			throw new Error(`Unable to create connection with MongoDB: ${mongoConnectionError}`);
+		}
 	}
 
-	// /**
-	//  * Load the data from the file repository
-	//  *
-	//  * @public
-	//  * @async
-	//  *
-	//  * @returns {Object[]} Array of objects containing the data
-	//  */
-	// async getData() {
-	// 	const encodedData = await fs.readFile(this.#filename, {
-	// 		encoding: "utf-8",
-	// 	});
-	// 	const data = JSON.parse(encodedData);
+	/**
+	 * Load the data from the mongoDB collection
+	 *
+	 * @public
+	 * @async
+	 *
+	 * @returns {Object[]} Array of objects containing the data
+	 */
+	async getData(opts = {}) {
+		return this.#model.find(opts);
+	}
 
-	// 	return [...data];
-	// }
+	/**
+	 * Save data to the mongoDB collection
+	 *
+	 * @async
+	 * @public
+	 * @param {Object} [data={}] Object containing the data to be saved
+	 *
+	 * @returns {null}
+	 */
+	async addData(data) {
 
-	// /**
-	//  * Save data to the corresponding file
-	//  *
-	//  * @async
-	//  * @public
-	//  * @param {Object} [data={}] Object containing the data to be saved
-	//  *
-	//  * @returns {null}
-	//  */
-	// async addData(data = {}) {
-	// 	if (data.id === undefined) {
-	// 		throw new Error(`The object must have an ID: ${data}`);
-	// 	}
+		// Unique code is needed for each element
+		const product = await this.#model.findOne({code: data.code});
+		if (product) {
+			throw new Error(
+				`Unable to add new product to database: Code ${data.code} is not unique.`,
+			);
+		}
 
-	// 	// Only instances of Product class can be added
-	// 	const isValid = data instanceof Product;
-	// 	if (!isValid) {
-	// 		throw new Error(
-	// 			"Unable to add new product to ProductManager: data is not an instance of Product",
-	// 		);
-	// 	}
+		await this.#model.create(data);
+	}
 
-	// 	// Unique code is needed for each product
-	// 	const isCodeUnique = await this.#isUnique({
-	// 		key: "code",
-	// 		value: data.code,
-	// 	});
-	// 	if (!isCodeUnique) {
-	// 		throw new Error(
-	// 			`Unable to add new product to ProductManager: Code ${data.code} is not unique.`,
-	// 		);
-	// 	}
+	/**
+	 * Get the information of the object that matches with the identifier information.
+	 *
+	 * @param {Object} identifier - The identifier to use to find the data
+	 * @param {string} identifier.key - The name of the key to use as an identifier (id or code available)
+	 * @param {any} identifier.value - The value assigned to the key
+	 * @returns {Object} dataIdentified - The object found in the data file
+	 */
+	async getDataByIdentifier(identifier) {
+		let { key, value } = identifier;
 
-	// 	// Unique ID is needed for each product
-	// 	const isIdUnique = await this.#isUnique({
-	// 		key: "id",
-	// 		value: data.id,
-	// 	});
-	// 	if (!isIdUnique) {
-	// 		throw new Error(
-	// 			`Unable to add new product to ProductManager: UUID ${data.code} is not unique.`,
-	// 		);
-	// 	}
+		if (key === undefined || value === undefined) {
+			throw new Error("Please provide an identifier to fetch the data");
+		}
 
-	// 	const fileData = await this.getData();
-	// 	fileData.push(data);
+		if (key === "id") {
+			const dataIdentified = await this.#model.findOne({ _id: value});
+			return dataIdentified || null;
+		}
 
-	// 	await fs.writeFile(this.#filename, JSON.stringify(fileData, null, "\t"), {
-	// 		encoding: "utf-8",
-	// 	});
-	// }
+		if (key === "code") {
+			const dataIdentified = await this.#model.findOne({ code: value});
+			return dataIdentified || null;
+		}
+	}
 
-	// /**
-	//  * Get the information of the object that matches with the identifier information.
-	//  *
-	//  * @param {Object} identifier - The identifier to use to find the data
-	//  * @param {string} identifier.key - The name of the key to use as an identifier
-	//  * @param {any} identifier.value - The value assigned to the key
-	//  * @returns {Object} dataIdentified - The object found in the data file
-	//  */
-	// async getDataByIdentifier(identifier) {
-	// 	if (identifier.key === undefined || identifier.value === undefined) {
-	// 		throw new Error("Please provide an identifier to fetch the data");
-	// 	}
+	/**
+	 * Find the object that matches with the identifier and remove it from the database
+	 *
+	 * @param {Object} identifier - The identifier to use to find the data
+	 * @param {string} identifier.key - The name of the key to use as an identifier
+	 * @param {any} identifier.value - The value assigned to the key
+	 */
+	async deleteDataByIdentifier(identifier) {
+		let { key, value } = identifier;
 
-	// 	const fileData = await this.getData();
-	// 	const dataIdentified = fileData.filter(
-	// 		(data) => data[identifier.key] === identifier.value,
-	// 	);
+		if (key === undefined || value === undefined) {
+			throw new Error("Please provide an identifier to delete the data");
+		}
 
-	// 	return dataIdentified || null;
-	// }
+		let result;
+		if (key === "id") {
+			result = await this.#model.deleteOne({ _id: value});
+		}
 
-	// /**
-	//  * Find the object that matches with the identifier and remove it from the data file.
-	//  *
-	//  * @param {Object} identifier - The identifier to use to find the data
-	//  * @param {string} identifier.key - The name of the key to use as an identifier
-	//  * @param {any} identifier.value - The value assigned to the key
-	//  */
-	// async deleteDataByIdentifier(identifier) {
-	// 	if (identifier.key === undefined || identifier.value === undefined) {
-	// 		throw new Error("Please provide an identifier to delete the data");
-	// 	}
+		if (key === "code") {
+			result = await this.#model.deleteOne({ code: value});
+		}
 
-	// 	const fileData = await this.getData();
-	// 	const dataExist = fileData.some(
-	// 		(data) => data[identifier.key] === identifier.value,
-	// 	);
+		if (result.deletedCount === 0) return new Error("No data was deleted");
+	}
 
-	// 	if (!dataExist) {
-	// 		throw new Error(
-	// 			`Unable to locate data object with ${JSON.stringify(identifier)}`,
-	// 		);
-	// 	}
+	/**
+	 * Find the object that matches with the identifier to update it.
+	 *
+	 * @param {Object} identifier - The identifier to use to find the database
+	 * @param {string} identifier.key - The name of the key to use as an identifier
+	 * @param {any} identifier.value - The value assigned to the key
+	 * @param {Object} update - The information with the updated information
+	 */
+	async updateDataByIdentifier(identifier, update) {
+		let { key, value } = identifier;
 
-	// 	const dataUpdated = fileData.filter(
-	// 		(data) => data[identifier.key] !== identifier.value,
-	// 	);
+		if (key === undefined || value === undefined) {
+			throw new Error("Please provide an identifier to update the data");
+		}
 
-	// 	await fs.writeFile(
-	// 		this.#filename,
-	// 		JSON.stringify(dataUpdated, null, "\t"),
-	// 		{
-	// 			encoding: "utf-8",
-	// 		},
-	// 	);
-	// }
+		if (update === undefined) {
+			throw new Error("Please provide the information to update");
+		}
 
-	// /**
-	//  * Find the object that matches with the identifier to update it.
-	//  *
-	//  * @param {Object} identifier - The identifier to use to find the data
-	//  * @param {string} identifier.key - The name of the key to use as an identifier
-	//  * @param {any} identifier.value - The value assigned to the key
-	//  * @param {Object} update - The information with the updated information
-	//  */
-	// async updateDataByIdentifier(identifier, update) {
-	// 	if (identifier.key === undefined || identifier.value === undefined) {
-	// 		throw new Error("Please provide an identifier to update the data");
-	// 	}
+		let result;
+		if (key === "id") {
+			result = await this.#model.updateOne({ _id: value}, update);
+		}
 
-	// 	if (update === undefined) {
-	// 		throw new Error("Please provide the updated information");
-	// 	}
+		if (key === "code") {
+			result = await this.#model.updateOne({ code: value}, update);
+		}
 
-	// 	const fileData = await this.getData();
-	// 	const dataIndex = fileData.findIndex(
-	// 		(data) => data[identifier.key] === identifier.value,
-	// 	);
-
-	// 	if (dataIndex === -1) {
-	// 		throw new Error(
-	// 			`Unable to find data with identifier ${JSON.stringify(identifier)}`,
-	// 		);
-	// 	}
-
-	// 	fileData[dataIndex] = update;
-	// 	await fs.writeFile(this.#filename, JSON.stringify(fileData, null, "\t"), {
-	// 		encoding: "utf-8",
-	// 	});
-	// }
-
-	// async #isUnique(identifier) {
-	// 	const products = await this.getData();
-	// 	const productFound = products.some(
-	// 		(p) => p[identifier.key] === identifier.value,
-	// 	);
-
-	// 	return !productFound;
-	// }
+		if (!result.acknowledged || result.modifiedCount === 0) return new Error("No data was updated");
+	}
 }

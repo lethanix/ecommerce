@@ -1,15 +1,17 @@
-import { FileRepository } from "../../repositories/file.repository.js";
+// import { FileRepository as Repository } from "../../repositories/file.repository.js";
+// import { MongoRepository as Repository } from "../../repositories/mongo.repository.js";
+import repositoryService from "../../repositories/index.js";
 
 export class ProductManager {
 	#repository;
 
-	constructor(database = "") {
-		this.#repository = new FileRepository(database);
+	constructor(database) {
+		this.#repository = repositoryService(database);
+
 	}
 
 	async addProduct(newProduct) {
 		await this.#repository.addData(newProduct);
-		return newProduct;
 	}
 
 	async getProducts() {
@@ -17,16 +19,14 @@ export class ProductManager {
 	}
 
 	async getProductById(id) {
-		const productArray = await this.#repository.getDataByIdentifier({
+		const product = await this.#repository.getDataByIdentifier({
 			key: "id",
 			value: id,
 		});
 
-		if (productArray === null) {
+		if (product === null) {
 			throw new Error(`Unable to retrieve product with id ${id}`);
 		}
-
-		const product = productArray[0];
 
 		return product;
 	}
