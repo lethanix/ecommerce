@@ -1,35 +1,35 @@
 export class Cart {
-    static #cartsCreated = 0;
-    #id;
-    #products;
+	static #cartsCreated = 0;
+	#id;
+	#products;
 
-    constructor() {
-        this.#id = Cart.#cartsCreated++;
-        this.#products = [];
-    }
+	constructor() {
+		this.#id = Cart.#cartsCreated++;
+		this.#products = [];
+	}
 
-    get id() {
-        return this.#id;
-    }
+	get id() {
+		return this.#id;
+	}
 
-    get products() {
-        return [...this.#products];
-    }
+	get products() {
+		return [...this.#products];
+	}
 
-    toJSON() {
-        const tmp = JSON.stringify(
-            {
-                id: this.#id,
-                products: this.#products,
-            },
-            null,
-            4,
-        );
+	toJSON() {
+		const tmp = JSON.stringify(
+			{
+				id: this.#id,
+				products: this.#products,
+			},
+			null,
+			4,
+		);
 
-        return JSON.parse(tmp);
-    }
+		return JSON.parse(tmp);
+	}
 
-    toString() {
-        return JSON.stringify(this);
-    }
+	toString() {
+		return JSON.stringify(this);
+	}
 }

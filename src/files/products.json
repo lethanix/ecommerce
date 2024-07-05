@@ -1,56 +1,12 @@
 [
 	{
-		"id": "6265dfaf-ea69-4743-beaa-575bf8027148",
-		"title": "Shampoo",
-		"description": "Herbal",
-		"price": "$40",
-		"thumbnail": [],
-		"code": "HEP",
-		"stock": 15,
-		"status": true,
-		"category": "Personal"
-	},
-	{
-		"id": "693a2fae-1fa4-447b-9f1f-1e226d786fd9",
-		"title": "iPad",
-		"description": "With calculator",
-		"price": "19000",
-		"thumbnail": [],
-		"code": "CALPAD",
-		"stock": 8,
-		"status": false,
-		"category": "Technology"
-	},
-	{
-		"id": "1d94d5af-8311-41f9-ac3e-5a1963560621",
+		"id": "b7b12793-690c-4769-9463-60959c389e33",
 		"title": "iPhone",
-		"description": "Latest device",
-		"price": "26000",
+		"description": "Latest device ",
+		"price": "27000",
 		"thumbnail": [],
-		"code": "iOS18",
-		"stock": "13",
-		"status": true,
-		"category": "Technology"
-	},
-	{
-		"id": "0b593bd0-da55-4e24-ac0a-14d09f76b188",
-		"title": "Macbook Air",
-		"description": "M3",
-		"price": "30000",
-		"thumbnail": [],
-		"code": "mac3",
-		"stock": "130",
-		"status": true,
-		"category": "Technology"
-	},
-	{
-		"id": "95aec785-0a7a-45d4-9d15-b514394d9717",
-		"title": "PC Gamer",
-		"description": "Master Race",
-		"price": "25000",
-		"thumbnail": [],
-		"code": "pc-4960",
-		"stock": "5",
+		"code": "ios18",
+		"stock": "189",
 		"status": true,
 		"category": "Technology"
 	}

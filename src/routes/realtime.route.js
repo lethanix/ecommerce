@@ -1,23 +1,22 @@
 import { Router } from "express";
-import { Product } from "../models/product.js";
 import { productService } from "../managers/index.js";
+import { Product } from "../models/product.js";
 
 export const router = Router();
 
 router.post("/", async (req, res) => {
-    try {
-        // Get the product object data
+	try {
+		// Get the product object data and added to db/filesystem
 		const formData = req.body;
-        console.log(`Form data to work on: ${JSON.stringify(formData)}`);
 		const product = new Product(formData);
 
 		const result = await productService.addProduct(product);
 
-        req.io.emit("server:product:added", result);
-        res.send({ status: "Success", payload: result });
+		req.io.emit("server:product:added", result);
+		res.send({ status: "Success", payload: result });
 
-    } catch (error) {
-        console.error(`form:product:add: ${error}`);
-        res.status(500).send({ status: "Error", payload: error.toString() });
-    }
+	} catch (error) {
+		console.error(`form:product:add: ${error}`);
+		res.status(500).send({ status: "Error", payload: error.toString() });
+	}
 });

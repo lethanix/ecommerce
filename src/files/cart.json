@@ -1,1 +1,8 @@
-[{"id":0,"products":[{"product":"6265dfaf-ea69-4743-beaa-575bf8027148","quantity":3}]}]
+[
+	{
+		"id": 0,
+		"products": [
+			{ "product": "6265dfaf-ea69-4743-beaa-575bf8027148", "quantity": 3 }
+		]
+	}
+]
