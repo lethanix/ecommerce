@@ -3,7 +3,7 @@ export class Product {
 	#title;
 	#description;
 	#price;
-	#thumbnail;
+	#thumbnails;
 	#code;
 	#stock;
 	#status;
@@ -14,7 +14,7 @@ export class Product {
 		"title",
 		"description",
 		"price",
-		// "thumbnail",
+		// "thumbnails",
 		"code",
 		"stock",
 		"status",
@@ -26,7 +26,7 @@ export class Product {
 		title,
 		description,
 		price,
-		thumbnail,
+		thumbnails,
 		code,
 		stock,
 		status,
@@ -37,7 +37,7 @@ export class Product {
 			title,
 			description,
 			price,
-			thumbnail,
+			thumbnails,
 			code,
 			stock,
 			status,
@@ -58,7 +58,7 @@ export class Product {
 		this.#title = title;
 		this.#description = description;
 		this.#price = price;
-		this.#thumbnail = thumbnail ?? [];
+		this.#thumbnails = thumbnails ?? [];
 		this.#code = code;
 		this.#stock = stock;
 		this.#status = status ?? true;
@@ -74,8 +74,8 @@ export class Product {
 	get price() {
 		return this.#price;
 	}
-	get thumbnail() {
-		return this.#thumbnail;
+	get thumbnails() {
+		return this.#thumbnails;
 	}
 	get stock() {
 		return this.#stock;
@@ -108,7 +108,7 @@ export class Product {
 				title: this.#title,
 				description: this.#description,
 				price: this.#price,
-				thumbnail: this.#thumbnail,
+				thumbnail: this.#thumbnails,
 				code: this.#code,
 				stock: this.#stock,
 				status: this.#status,
