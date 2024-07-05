@@ -3,8 +3,8 @@ import { FileRepository } from "../../repositories/file.repository.js";
 export class ProductManager {
 	#repository;
 
-	constructor(database = "") {
-		this.#repository = new FileRepository(database);
+	constructor(dataFilename = "") {
+		this.#repository = new FileRepository(dataFilename);
 	}
 
 	async addProduct(newProduct) {
