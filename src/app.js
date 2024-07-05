@@ -8,6 +8,9 @@ import { router as cartRoutes } from "./routes/cart.route.js";
 import { router as viewRoutes } from "./routes/view.route.js";
 import { __dirname } from "./utils.js";
 
+import {productService} from "./managers/index.js";
+import {Product} from "./models/product.js";
+
 const app = express();
 
 const PORT = Number.parseInt(process.env.PORT) || process.argv[3] || 8080;
@@ -36,7 +39,23 @@ const server = app.listen(PORT, () => {
 const io = new Server(server);
 
 io.on("connection", (socket) => {
-	socket.on("submit-product", (formData) => {
-		console.log(formData);
+	console.log(`Client connected: ${socket.id}`);
+
+	socket.on("submit-product", async (data) => {
+		try {
+			// Get the product object data
+			const formData = data.formData;
+			const product = new Product(formData);
+
+			await productService.addProduct(product);
+
+			io.emit("new product added", product.id);
+
+		} catch (productFormError) {
+			io.emit("error adding product", { error: productFormError.toString() });
+			console.log(`Unable to add product from form: ${productFormError}`);
+		}
+
+
 	})
 })

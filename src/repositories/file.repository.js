@@ -76,7 +76,7 @@ export class FileRepository {
 		const fileData = await this.getData();
 		fileData.push(data);
 
-		await fs.writeFile(this.#filename, JSON.stringify(fileData), {
+		await fs.writeFile(this.#filename, JSON.stringify(fileData,null, "\t"), {
 			encoding: "utf-8",
 		});
 	}
@@ -129,7 +129,7 @@ export class FileRepository {
 			(data) => data[identifier.key] !== identifier.value,
 		);
 
-		await fs.writeFile(this.#filename, JSON.stringify(dataUpdated), {
+		await fs.writeFile(this.#filename, JSON.stringify(dataUpdated, null, "\t"), {
 			encoding: "utf-8",
 		});
 	}
@@ -163,7 +163,7 @@ export class FileRepository {
 		}
 
 		fileData[dataIndex] = update;
-		await fs.writeFile(this.#filename, JSON.stringify(fileData), {
+		await fs.writeFile(this.#filename, JSON.stringify(fileData, null, "\t"), {
 			encoding: "utf-8",
 		});
 	}
