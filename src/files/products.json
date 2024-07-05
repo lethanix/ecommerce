@@ -1,13 +1,1 @@
-[
-	{
-		"id": "b7b12793-690c-4769-9463-60959c389e33",
-		"title": "iPhone",
-		"description": "Latest device ",
-		"price": "27000",
-		"thumbnail": [],
-		"code": "ios18",
-		"stock": "189",
-		"status": true,
-		"category": "Technology"
-	}
-]
+[]

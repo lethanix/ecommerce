@@ -52,9 +52,9 @@
 <br>
 <div id="product-list">
     {{#each products}}
-        <div data-id={{this.id}}>
+        <div id={{this.id}}>
             <p>{{this.title}}</p>
-            <button data-id={{this.id}}>delete</button>
+            <button data-id={{this.id}} onclick="deleteProduct(this)">delete</button>
         </div>
     {{/each}}
 </div>
