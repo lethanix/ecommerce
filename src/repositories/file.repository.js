@@ -1,8 +1,8 @@
 import { existsSync, writeFileSync } from "node:fs";
 import * as fs from "node:fs/promises";
 import path from "node:path";
-import { __filespath } from "../utils.js";
 import { getModel } from "../managers/index.js";
+import { __filespath } from "../utils.js";
 
 /**
  * Implementation of the FileRepository class to save data
@@ -137,7 +137,7 @@ export class FileRepository {
 			(data) => data[identifier.key] === identifier.value,
 		);
 
-		// Return the element found 
+		// Return the element found
 		return dataIdentified[0] || null;
 	}
 

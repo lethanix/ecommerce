@@ -1,6 +1,6 @@
 import express from "express";
-import { productService as manager } from "../managers/index.js";
 import { Product } from "../managers/fs/models/product.js";
+import { productService as manager } from "../managers/index.js";
 
 export const router = express.Router();
 
@@ -52,12 +52,10 @@ router.post("/", async (req, res) => {
 	try {
 		await manager.addProduct(req.body);
 
-		res
-			.status(200)
-			.send({
-				status: "Successful",
-				message: "Product added",
-			});
+		res.status(200).send({
+			status: "Successful",
+			message: "Product added",
+		});
 	} catch (addProductError) {
 		return res
 			.status(400)

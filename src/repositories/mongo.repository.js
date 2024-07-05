@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { ATLAS_URI } from "../utils.js"
 import { getModel } from "../managers/index.js";
+import { ATLAS_URI } from "../utils.js";
 
 /**
  * Implementation of the MongoRepository class to save data
@@ -28,7 +28,9 @@ export class MongoRepository {
 		try {
 			const connection = mongoose.connect(ATLAS_URI);
 		} catch (mongoConnectionError) {
-			throw new Error(`Unable to create connection with MongoDB: ${mongoConnectionError}`);
+			throw new Error(
+				`Unable to create connection with MongoDB: ${mongoConnectionError}`,
+			);
 		}
 	}
 
@@ -54,9 +56,8 @@ export class MongoRepository {
 	 * @returns {null}
 	 */
 	async addData(data) {
-
 		// Unique code is needed for each element
-		const product = await this.#model.findOne({code: data.code});
+		const product = await this.#model.findOne({ code: data.code });
 		if (product) {
 			throw new Error(
 				`Unable to add new product to database: Code ${data.code} is not unique.`,
@@ -75,19 +76,19 @@ export class MongoRepository {
 	 * @returns {Object} dataIdentified - The object found in the data file
 	 */
 	async getDataByIdentifier(identifier) {
-		let { key, value } = identifier;
+		const { key, value } = identifier;
 
 		if (key === undefined || value === undefined) {
 			throw new Error("Please provide an identifier to fetch the data");
 		}
 
 		if (key === "id") {
-			const dataIdentified = await this.#model.findOne({ _id: value});
+			const dataIdentified = await this.#model.findOne({ _id: value });
 			return dataIdentified || null;
 		}
 
 		if (key === "code") {
-			const dataIdentified = await this.#model.findOne({ code: value});
+			const dataIdentified = await this.#model.findOne({ code: value });
 			return dataIdentified || null;
 		}
 	}
@@ -100,7 +101,7 @@ export class MongoRepository {
 	 * @param {any} identifier.value - The value assigned to the key
 	 */
 	async deleteDataByIdentifier(identifier) {
-		let { key, value } = identifier;
+		const { key, value } = identifier;
 
 		if (key === undefined || value === undefined) {
 			throw new Error("Please provide an identifier to delete the data");
@@ -108,11 +109,11 @@ export class MongoRepository {
 
 		let result;
 		if (key === "id") {
-			result = await this.#model.deleteOne({ _id: value});
+			result = await this.#model.deleteOne({ _id: value });
 		}
 
 		if (key === "code") {
-			result = await this.#model.deleteOne({ code: value});
+			result = await this.#model.deleteOne({ code: value });
 		}
 
 		if (result.deletedCount === 0) return new Error("No data was deleted");
@@ -127,7 +128,7 @@ export class MongoRepository {
 	 * @param {Object} update - The information with the updated information
 	 */
 	async updateDataByIdentifier(identifier, update) {
-		let { key, value } = identifier;
+		const { key, value } = identifier;
 
 		if (key === undefined || value === undefined) {
 			throw new Error("Please provide an identifier to update the data");
@@ -139,13 +140,14 @@ export class MongoRepository {
 
 		let result;
 		if (key === "id") {
-			result = await this.#model.updateOne({ _id: value}, update);
+			result = await this.#model.updateOne({ _id: value }, update);
 		}
 
 		if (key === "code") {
-			result = await this.#model.updateOne({ code: value}, update);
+			result = await this.#model.updateOne({ code: value }, update);
 		}
 
-		if (!result.acknowledged || result.modifiedCount === 0) return new Error("No data was updated");
+		if (!result.acknowledged || result.modifiedCount === 0)
+			return new Error("No data was updated");
 	}
 }
