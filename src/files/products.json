@@ -11,80 +11,14 @@
 		"category": "Personal"
 	},
 	{
-		"id": "a03d80a4-5c9a-48e9-b77e-166dcf06e3c5",
-		"title": "Soap",
-		"description": "Grisi",
-		"price": "$15",
-		"thumbnail": [],
-		"code": "SOAP2",
-		"stock": 80,
-		"status": true,
-		"category": "Personal"
-	},
-	{
-		"id": "9f594f79-cbe5-433a-abd8-ee002dea8e48",
-		"title": "iPhone ",
-		"description": "Best device ",
+		"id": "66bc92df-7107-469a-b18a-9ccb43d0a56b",
+		"title": "iPad",
+		"description": "With calculator",
 		"price": "19000",
 		"thumbnail": [],
-		"code": "IOS19",
+		"code": "CALPAD",
 		"stock": 3,
 		"status": false,
 		"category": "Technology"
-	},
-	{
-		"id": "1434ddfb-4a94-4a96-ab54-1f9a5cf0c05a",
-		"title": "iPad",
-		"description": ";ljk",
-		"price": "a;sldjkf",
-		"thumbnail": [],
-		"code": "sd",
-		"stock": 3,
-		"status": false,
-		"category": "tech"
-	},
-	{
-		"id": "86f0017c-88cc-481f-9165-68cd9b749aae",
-		"title": "Fan",
-		"description": "Desk fan",
-		"price": "280",
-		"thumbnail": [],
-		"code": "FNSD",
-		"stock": 1,
-		"status": false,
-		"category": "Utilities"
-	},
-	{
-		"id": "1d986ca2-0377-4e3f-b03e-d3fa1905161a",
-		"title": "Fan",
-		"description": "Desk fan",
-		"price": "280",
-		"thumbnail": [],
-		"code": "DF",
-		"stock": 1,
-		"status": false,
-		"category": "Utilities"
-	},
-	{
-		"id": "104cbc6e-308c-4506-a702-85439051e3df",
-		"title": "Topper",
-		"description": "Small container",
-		"price": "80",
-		"thumbnail": [],
-		"code": "T13",
-		"stock": 7,
-		"status": false,
-		"category": "Utilities"
-	},
-	{
-		"id": "f4df7f02-cb8d-4414-a42e-61b7639bfbd3",
-		"title": "al;sdjk",
-		"description": "asd;lfj",
-		"price": "asdl;fj",
-		"thumbnail": [],
-		"code": "a;sdjkfsdjf",
-		"stock": 3,
-		"status": false,
-		"category": "asd;fjk"
 	}
 ]
