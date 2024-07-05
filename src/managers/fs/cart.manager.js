@@ -1,5 +1,9 @@
 import { FileRepository } from "../../repositories/file.repository.js";
+<<<<<<< HEAD
 import { Cart } from "../fs/models/cart.js";
+=======
+import { Cart } from "../fs/models/cart.js"
+>>>>>>> tmp
 
 export class CartManager {
 	#repository;
