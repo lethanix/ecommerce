@@ -1,11 +1,6 @@
 import express from "express";
-<<<<<<< HEAD
 import { Cart } from "../managers/fs/models/cart.js";
 import { cartService as manager } from "../managers/index.js";
-=======
-import { cartService as manager } from "../managers/index.js";
-import { Cart } from "../managers/fs/models/cart.js";
->>>>>>> tmp
 
 export const router = express.Router();
 

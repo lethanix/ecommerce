@@ -7,10 +7,6 @@ export class ProductManager {
 
 	constructor(database) {
 		this.#repository = repositoryService(database);
-<<<<<<< HEAD
-=======
-
->>>>>>> tmp
 	}
 
 	async addProduct(newProduct) {

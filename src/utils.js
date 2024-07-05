@@ -14,8 +14,4 @@ export const __filespath = path.join(__dirname, "db");
 export const PRODUCT_DATA = process.env.PRODUCT_DATA || "product";
 export const CART_DATA = process.env.CART_DATA || "cart";
 export const ATLAS_URI = process.env.ATLAS_URI;
-<<<<<<< HEAD
 export const DB_TYPE = "mongo";
-=======
-export const DB_TYPE = "mongo";
->>>>>>> tmp
