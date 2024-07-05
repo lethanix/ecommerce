@@ -1,56 +1,63 @@
-<style>
-    :root {
-        color-scheme: light dark;
-    }
-</style>
 
 <h1>Realtime Products</h1>
 
 <form id="product-form" >
 
-	<label>Title</label>
-    <input name="title" type="text">
+	<label>
+        Title
+        <input name="title" type="text" required>
+    </label>
     <br/>
 
-	<label>Description</label>
-    <input name="description" type="text">
+	<label>
+        Description
+        <input name="description" type="text" required>
+    </label>
     <br/>
 
-	<label>Price</label>
-    <input name="price" type="text">
+	<label>
+        Price
+        <input name="price" type="text" required>
+    </label>
     <br/>
 
-	{{!-- <label>Thumbnails</label>
-    <input name="thumbnails">
-    <br/> --}}
-
-	<label>Code</label>
-    <input name="code" type="text">
+	<label>
+        Code
+        <input name="code" type="text" required>
+    </label>
     <br/>
 
-	<label>Stock</label>
-    <input name="stock" type="number">
+	<label>
+        Stock
+        <input name="stock" type="number" required>
+    </label>
     <br/>
 
-	<label>Status</label>
-    <input name="status" type="checkbox">
+	<label>
+        Status
+        <input name="status" type="checkbox">
+    </label>
     <br/>
 
-	<label>Category</label>
-    <input name="category" type="text">
+	<label>
+        Category
+        <input name="category" type="text" required>
+    </label>
     <br/>
-
-    {{!-- <input type="file" name="thumbnail" multiple>
-    <br/> --}}
 
     <input type="submit" name="Submit">
 </form>
-
+<br>
+<br>
+<br>
 <div id="product-list">
     {{#each products}}
-        <div data-id={{this.id}}>{{this.title}}</div>
+        <div data-id={{this.id}}>
+            <p>{{this.title}}</p>
+            <button data-id={{this.id}}>delete</button>
+        </div>
     {{/each}}
 </div>
 
-<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/js/realtime.js"></script>

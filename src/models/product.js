@@ -9,14 +9,12 @@ export class Product {
 	#status;
 	#category;
 
-	static #productsCreated = 0;
 	static #requiredProperties = [
 		"title",
 		"description",
 		"price",
 		"code",
 		"stock", // "thumbnails",
-		"status",
 		"category",
 	];
 

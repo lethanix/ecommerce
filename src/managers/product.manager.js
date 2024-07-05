@@ -40,6 +40,7 @@ export class ProductManager {
 		}
 
 		await this.#repository.addData(newProduct);
+		return newProduct;
 	}
 
 	async getProducts() {

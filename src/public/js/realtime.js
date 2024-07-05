@@ -1,3 +1,4 @@
+
 // Create socket connection 
 const socket = io();
 
@@ -8,47 +9,41 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     // Get the data and create a product object
-    const formData = new FormData(form);
+    const data = new URLSearchParams(new FormData(form));
 
-    // Clean the input data
-    const product = {};
-    for (const [key, value] of formData) {
-        product[key] = value;
-    }
+    fetch("/api/realtimeproducts", {
+        method: "POST",
+        body: data,
+    }).then( _ => form.reset());
 
-    product.status = product.status === "on";
-    product.stock = Number(product.stock);
-
-    // Send message
-    socket.emit("client:product:create", { formData: product }, (res) => {
-        if (res.status === "error") {
-            console.error(`Unable to add product from form: ${res.payload}`);
-            return;
-        }
-
-        console.log(`product:create ${res.payload}`);
-    });
-
-    // Clear form
-    form.reset();
-})
-
-// Events
-socket.on("server:product:load", (products) => {
-    const productList = document.getElementById("product-list");
-    productList.innerHTML = "";
-
-    products.forEach((product) => {
-        productList.append(productUI(product));
-    })
-
-    console.log(products);
 });
 
+// Events
+socket.on("server:product:added", (product) => {
+    const productList = document.getElementById("product-list");
+
+    const fragment = document.createDocumentFragment();
+
+    fragment.appendChild(productUI(product));
+
+    productList.appendChild(fragment);
+});
+
+/**
+ * 
+ * @param {Product} product - Creates the HTML element of a product
+ * @returns {HTMLDivElement} div - Returns the div element created
+ */
 const productUI = (product) => {
     const div = document.createElement("div");
-    div.innerHTML = `${product.title}`;
-    div.setAttribute("id", product.id);
+    const p = document.createElement("p");
+    p.innerHTML = product.title;
+
+    const button = document.createElement("button");
+    button.setAttribute("data-id", product.id);
+    button.innerHTML = "delete";
+
+    div.append(p, button);
 
     return div;
 }
