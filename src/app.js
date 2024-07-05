@@ -1,7 +1,7 @@
 import path from "node:path";
 import express from "express";
 import handlebars from "express-handlebars";
-import { Socket } from "socket.io";
+import { Server } from "socket.io";
 
 import { router as productRoutes } from "./routes/product.route.js";
 import { router as cartRoutes } from "./routes/cart.route.js";
@@ -27,7 +27,16 @@ app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/", viewRoutes);
 
-// Setup server
-app.listen(PORT, () => {
+// Setup Express server
+const server = app.listen(PORT, () => {
 	console.log(`Server listening on port ${PORT}`);
 });
+
+// Setup Socket server 
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+	socket.on("submit-product", (formData) => {
+		console.log(formData);
+	})
+})
