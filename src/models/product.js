@@ -54,7 +54,7 @@ export class Product {
 		}
 
 		// Unique id is needed
-		this.#id = id ?? Product.#productsCreated++;
+		this.#id = crypto.randomUUID();
 		this.#title = title;
 		this.#description = description;
 		this.#price = price;

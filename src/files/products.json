@@ -1,1 +1,24 @@
-[]
+[
+	{
+		"id": "6265dfaf-ea69-4743-beaa-575bf8027148",
+		"title": "Shampoo",
+		"description": "Herbal",
+		"price": "$40",
+		"thumbnail": [],
+		"code": "HEP",
+		"stock": 15,
+		"status": true,
+		"category": "Personal"
+	},
+	{
+		"id": "a03d80a4-5c9a-48e9-b77e-166dcf06e3c5",
+		"title": "Shampoo",
+		"description": "Herbal",
+		"price": "$40",
+		"thumbnail": [],
+		"code": "HEP2",
+		"stock": 15,
+		"status": true,
+		"category": "Personal"
+	}
+]

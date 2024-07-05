@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"dev": "nodemon src/app.js",
+		"dev": "node --watch src/app.js",
 		"start": "node src/app.js"
 	},
 	"author": "",
@@ -14,7 +14,6 @@
 		"express": "^4.18.2"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.7.3",
-		"nodemon": "^3.0.1"
+		"@biomejs/biome": "1.7.3"
 	}
 }
