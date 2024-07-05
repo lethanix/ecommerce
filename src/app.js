@@ -10,6 +10,7 @@ import { __dirname } from "./utils.js";
 
 import {productService} from "./managers/index.js";
 import {Product} from "./models/product.js";
+import { callbackify } from "node:util";
 
 const app = express();
 
@@ -41,7 +42,7 @@ const io = new Server(server);
 io.on("connection", (socket) => {
 	console.log(`Client connected: ${socket.id}`);
 
-	socket.on("submit-product", async (data) => {
+	socket.on("submit-product", async (data, callback) => {
 		try {
 			// Get the product object data
 			const formData = data.formData;
@@ -49,11 +50,16 @@ io.on("connection", (socket) => {
 
 			await productService.addProduct(product);
 
-			io.emit("new product added", product.id);
+			callback({
+				status: "ok",
+				payload: product.id
+			});
 
 		} catch (productFormError) {
-			io.emit("error adding product", { error: productFormError.toString() });
-			console.log(`Unable to add product from form: ${productFormError}`);
+			callback({
+				status: "error",
+				payload: productFormError.toString()
+			});
 		}
 
 
