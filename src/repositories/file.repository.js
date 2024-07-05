@@ -1,8 +1,8 @@
 import { existsSync, writeFileSync } from "node:fs";
 import * as fs from "node:fs/promises";
 import path from "node:path";
-import { productModel as Product } from "../managers/index.js";
 import { __filespath } from "../utils.js";
+import { getModel } from "../managers/index.js";
 
 /**
  * Implementation of the FileRepository class to save data
@@ -12,10 +12,11 @@ import { __filespath } from "../utils.js";
  */
 export class FileRepository {
 	#filename;
+	#model;
 
 	/**
 	 * @constructor
-	 * @param {string} [file] The name of the file containing the products data
+	 * @param {string} [file] The name of the file containing the data
 	 */
 	constructor(file) {
 		if (!file) {
@@ -23,7 +24,9 @@ export class FileRepository {
 				"Unable to create cart repository: The name of the file is not provided",
 			);
 		}
+		file = file + ".json";
 		this.#filename = path.join(__filespath, file);
+		this.#model = getModel(file, "fs");
 		this.init();
 	}
 
@@ -69,38 +72,40 @@ export class FileRepository {
 	 *
 	 * @returns {null}
 	 */
-	async addData(data = {}) {
+	async addData(newData = {}) {
+		const data = new this.#model(newData);
+
 		if (data.id === undefined) {
 			throw new Error(`The object must have an ID: ${data}`);
 		}
 
-		// Only instances of Product class can be added
-		const isValid = data instanceof Product;
+		// Only instances of this.#model class can be added
+		const isValid = data instanceof this.#model;
 		if (!isValid) {
 			throw new Error(
-				"Unable to add new product to ProductManager: data is not an instance of Product",
+				`Unable to add new data to repository: data is not an instance of ${this.#filename}`,
 			);
 		}
 
-		// Unique code is needed for each product
+		// Unique code is needed for each element
 		const isCodeUnique = await this.#isUnique({
 			key: "code",
 			value: data.code,
 		});
 		if (!isCodeUnique) {
 			throw new Error(
-				`Unable to add new product to ProductManager: Code ${data.code} is not unique.`,
+				`Unable to add new date to repository: Code ${data.code} is not unique.`,
 			);
 		}
 
-		// Unique ID is needed for each product
+		// Unique ID is needed for each element
 		const isIdUnique = await this.#isUnique({
 			key: "id",
 			value: data.id,
 		});
 		if (!isIdUnique) {
 			throw new Error(
-				`Unable to add new product to ProductManager: UUID ${data.code} is not unique.`,
+				`Unable to add new data to repository: UUID ${data.code} is not unique.`,
 			);
 		}
 
@@ -110,6 +115,8 @@ export class FileRepository {
 		await fs.writeFile(this.#filename, JSON.stringify(fileData, null, "\t"), {
 			encoding: "utf-8",
 		});
+
+		return data.id;
 	}
 
 	/**
@@ -130,7 +137,8 @@ export class FileRepository {
 			(data) => data[identifier.key] === identifier.value,
 		);
 
-		return dataIdentified || null;
+		// Return the element found 
+		return dataIdentified[0] || null;
 	}
 
 	/**
@@ -197,18 +205,22 @@ export class FileRepository {
 			);
 		}
 
-		fileData[dataIndex] = update;
+		const tmp = { ...fileData[dataIndex], ...update };
+		console.log(tmp);
+		const dataUpdated = new this.#model(tmp);
+
+		fileData[dataIndex] = dataUpdated;
 		await fs.writeFile(this.#filename, JSON.stringify(fileData, null, "\t"), {
 			encoding: "utf-8",
 		});
 	}
 
 	async #isUnique(identifier) {
-		const products = await this.getData();
-		const productFound = products.some(
+		const elements = await this.getData();
+		const elementFound = elements.some(
 			(p) => p[identifier.key] === identifier.value,
 		);
 
-		return !productFound;
+		return !elementFound;
 	}
 }
