@@ -8,7 +8,7 @@ import path from "node:path";
 // Starting with NodeJS 20.11 / 21.2, we can use:
 export const __dirname = import.meta.dirname;
 
-export const __filespath = path.join(__dirname, "files");
+export const __filespath = path.join(__dirname, "db");
 
 // Env utils
 export const PRODUCT_DATA = process.env.PRODUCT_DATA || "products.json";

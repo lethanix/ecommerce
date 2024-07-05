@@ -1,6 +1,5 @@
 // Create socket connection
 const socket = io();
-
 //*** Form Event
 // Get the form information and send it to the server
 const form = document.getElementById("product-form");

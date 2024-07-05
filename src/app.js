@@ -10,9 +10,6 @@ import { router as realtimeRoutes } from "./routes/realtime.route.js";
 import { router as viewRoutes } from "./routes/view.route.js";
 import { __dirname } from "./utils.js";
 
-import { productService } from "./managers/index.js";
-import { Product } from "./models/product.js";
-
 // Setup Express server
 const app = express();
 const PORT = Number.parseInt(process.env.PORT) || process.argv[3] || 8080;

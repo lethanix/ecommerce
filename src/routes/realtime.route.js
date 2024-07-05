@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { productService } from "../managers/index.js";
-import { Product } from "../models/product.js";
+import { productModel as Product } from "../managers/index.js";
 
 export const router = Router();
 
@@ -36,4 +36,4 @@ router.delete("/:pid", async (req, res) => {
 		console.error(`form:product:delete: ${error}`);
 		res.status(500).send({ status: "Error", payload: `${error}` });
 	}
-})
+});

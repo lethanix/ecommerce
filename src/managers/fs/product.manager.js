@@ -1,5 +1,5 @@
-import { Product } from "../models/product.js";
-import { FileRepository } from "../repositories/file.repository.js";
+import { productModel as Product } from "../index.js";
+import { FileRepository } from "../../repositories/file.repository.js";
 
 export class ProductManager {
 	#repository;

@@ -1,21 +1,16 @@
 import express from "express";
-import { ProductManager } from "../managers/product.manager.js";
-import { Product } from "../models/product.js";
+import { productService as manager } from "../managers/index.js";
+import { productModel as Product } from "../managers/index.js";
 
-const PRODUCT_DATA = process.env.PRODUCT_DATA || "products.json";
-
-const manager = new ProductManager(PRODUCT_DATA);
 export const router = express.Router();
 
 router.get("/", async (req, res) => {
 	try {
 		const products = await manager.getProducts();
+		const limit = req.query.limit ?? "10";
+		const page = req.query.page ?? "1";
 
-		// No limit value provided. Return all products.
-		if (Object.keys(req.query).length === 0) return res.json(products);
-
-		// Verify if there is character different from a digit
-		const limit = req.query.limit;
+		// Verify if there is query string different from a digit
 		const regex = /\D+/g;
 		if (limit.match(regex)) {
 			return res.status(400).send({
@@ -23,6 +18,15 @@ router.get("/", async (req, res) => {
 				error: `Limit is not a valid number: ${limit}`,
 			});
 		}
+
+		if (page.match(regex)) {
+			return res.status(400).send({
+				status: "Error",
+				error: `Page is not a valid number: ${page}`,
+			});
+		}
+
+		const offset = page * limit - 1;
 
 		const limitedProducts = products.slice(0, limit);
 		res.json(limitedProducts);
