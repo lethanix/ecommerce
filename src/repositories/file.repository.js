@@ -1,8 +1,8 @@
 import { existsSync, writeFileSync } from "node:fs";
 import * as fs from "node:fs/promises";
 import path from "node:path";
-import { __filespath } from "../utils.js";
 import { productModel as Product } from "../managers/index.js";
+import { __filespath } from "../utils.js";
 
 /**
  * Implementation of the FileRepository class to save data
@@ -75,32 +75,32 @@ export class FileRepository {
 		}
 
 		// Only instances of Product class can be added
-		const isValid = newProduct instanceof Product;
+		const isValid = data instanceof Product;
 		if (!isValid) {
 			throw new Error(
-				"Unable to add new product to ProductManager: newProduct is not an instance of Product",
+				"Unable to add new product to ProductManager: data is not an instance of Product",
 			);
 		}
 
 		// Unique code is needed for each product
 		const isCodeUnique = await this.#isUnique({
 			key: "code",
-			value: newProduct.code,
+			value: data.code,
 		});
 		if (!isCodeUnique) {
 			throw new Error(
-				`Unable to add new product to ProductManager: Code ${newProduct.code} is not unique.`,
+				`Unable to add new product to ProductManager: Code ${data.code} is not unique.`,
 			);
 		}
 
 		// Unique ID is needed for each product
 		const isIdUnique = await this.#isUnique({
 			key: "id",
-			value: newProduct.id,
+			value: data.id,
 		});
 		if (!isIdUnique) {
 			throw new Error(
-				`Unable to add new product to ProductManager: UUID ${newProduct.code} is not unique.`,
+				`Unable to add new product to ProductManager: UUID ${data.code} is not unique.`,
 			);
 		}
 
