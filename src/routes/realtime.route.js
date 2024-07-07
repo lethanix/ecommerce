@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
 		console.log(`Product to be added: ${product.id}`);
 
 		const result = await productService.addProduct(product);
-		console.log(`Product added`);
+		console.log("Product added");
 
 		req.io.emit("server:product:added", result);
 		res.send({ status: "Success", payload: result });
@@ -28,7 +28,7 @@ router.delete("/:pid", async (req, res) => {
 		console.log(`Product to be deleted: ${pid}`);
 
 		await productService.deleteProduct(pid);
-		console.log(`Product deleted`);
+		console.log("Product deleted");
 
 		req.io.emit("server:product:deleted", pid);
 		res.send({ status: "Successful", message: "Product deleted" });
@@ -36,4 +36,4 @@ router.delete("/:pid", async (req, res) => {
 		console.error(`form:product:delete: ${error}`);
 		res.status(500).send({ status: "Error", payload: `${error}` });
 	}
-})
+});
