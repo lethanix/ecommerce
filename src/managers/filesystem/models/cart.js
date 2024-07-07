@@ -1,4 +1,4 @@
-export class Cart {
+export default class Cart {
 	static #cartsCreated = 0;
 	#id;
 	#products;

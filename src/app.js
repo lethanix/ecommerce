@@ -4,14 +4,11 @@ import express from "express";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 
-import { router as cartRoutes } from "./routes/cart.route.js";
-import { router as productRoutes } from "./routes/product.route.js";
-import { router as realtimeRoutes } from "./routes/realtime.route.js";
-import { router as viewRoutes } from "./routes/view.route.js";
+import { router as cartRoutes } from "./routes/cart.router.js";
+import { router as productRoutes } from "./routes/product.router.js";
+import { router as realtimeRoutes } from "./routes/realtime.router.js";
+import { router as viewRoutes } from "./routes/view.router.js";
 import { __dirname } from "./utils.js";
-
-import { productService } from "./managers/index.js";
-import { Product } from "./models/product.js";
 
 // Setup Express server
 const app = express();

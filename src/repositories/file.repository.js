@@ -14,15 +14,16 @@ export class FileRepository {
 
 	/**
 	 * @constructor
-	 * @param {string} [file] The name of the file containing the products data
+	 * @param {string} [file] The name of the file containing the data
 	 */
 	constructor(file) {
 		if (!file) {
 			throw new Error(
-				"Unable to create cart repository: The name of the file is not provided",
+				"Unable to create filesystem repository: The name of the file is not provided",
 			);
 		}
-		this.#filename = path.join(__filespath, file);
+		const filename = `${file}.json`;
+		this.#filename = path.join(__filespath, filename);
 		this.init();
 	}
 
@@ -66,7 +67,7 @@ export class FileRepository {
 	 * @public
 	 * @param {Object} [data={}] Object containing the data to be saved
 	 *
-	 * @returns {null}
+	 * @returns {String} - The ID of the added data
 	 */
 	async addData(data = {}) {
 		if (data.id === undefined) {
@@ -79,6 +80,8 @@ export class FileRepository {
 		await fs.writeFile(this.#filename, JSON.stringify(fileData, null, "\t"), {
 			encoding: "utf-8",
 		});
+
+		return data.id;
 	}
 
 	/**
@@ -87,7 +90,7 @@ export class FileRepository {
 	 * @param {Object} identifier - The identifier to use to find the data
 	 * @param {string} identifier.key - The name of the key to use as an identifier
 	 * @param {any} identifier.value - The value assigned to the key
-	 * @returns {Object} dataIdentified - The object found in the data file
+	 * @returns {Object} dataIdentified - The object found in the repository
 	 */
 	async getDataByIdentifier(identifier) {
 		if (identifier.key === undefined || identifier.value === undefined) {
@@ -99,11 +102,11 @@ export class FileRepository {
 			(data) => data[identifier.key] === identifier.value,
 		);
 
-		return dataIdentified || null;
+		return dataIdentified[0] || null;
 	}
 
 	/**
-	 * Find the object that matches with the identifier and remove it from the data file.
+	 * Find the object that matches with the identifier and remove it from the repository.
 	 *
 	 * @param {Object} identifier - The identifier to use to find the data
 	 * @param {string} identifier.key - The name of the key to use as an identifier
@@ -162,7 +165,7 @@ export class FileRepository {
 
 		if (dataIndex === -1) {
 			throw new Error(
-				`Unable to find data with identifier ${JSON.stringify(identifier)}`,
+				`Unable to find data with identifier ${identifier}`,
 			);
 		}
 
@@ -170,5 +173,7 @@ export class FileRepository {
 		await fs.writeFile(this.#filename, JSON.stringify(fileData, null, "\t"), {
 			encoding: "utf-8",
 		});
+
+		return identifier.value;
 	}
 }

@@ -1,0 +1,35 @@
+[
+	{
+		"id": "a2e3f8ad-1f9b-4507-81b2-3f010bc50f84",
+		"title": "Tasty Steel Soap",
+		"description": "Keyboard",
+		"price": 530.57,
+		"thumbnail": [],
+		"code": "6185007f-2b3c-455b-a1e2-b119cfe411f2",
+		"stock": 202,
+		"status": true,
+		"category": "Small"
+	},
+	{
+		"id": "9db5a787-18e3-4a20-aafb-07f61017c35a",
+		"title": "Tasty Rubber Towels",
+		"description": "Luxury Soap",
+		"price": 787.73,
+		"thumbnail": [],
+		"code": "d29c52c9-0a56-4b84-8f51-00ff4c83e847",
+		"stock": 502,
+		"status": true,
+		"category": "Self-care"
+	},
+	{
+		"id": "73b166b8-e56f-4787-bc4f-495cdcec3ae1",
+		"title": "Handcrafted Soft Ball",
+		"description": "Computer",
+		"price": 655.5,
+		"thumbnail": [],
+		"code": "c8b5d1e3-f3ea-4827-85aa-266cf5669ecd",
+		"stock": 617,
+		"status": true,
+		"category": "Generic"
+	}
+]

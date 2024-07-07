@@ -1,14 +1,18 @@
-import { Cart } from "../models/cart.js";
-import { FileRepository } from "../repositories/file.repository.js";
+import { FileRepository } from "../../repositories/file.repository.js";
+import Cart from "../filesystem/models/cart.js";
 
-export class CartManager {
+export default class CartManager {
 	#repository;
 
 	/**
 	 * Create a repository of carts to manage
 	 * @param {string} dataFilename="" Name of the repository
 	 */
-	constructor(dataFilename = "") {
+	constructor(dataFilename) {
+		if (!dataFilename) {
+			throw new Error("Filename is not provided");
+		}
+
 		this.#repository = new FileRepository(dataFilename);
 	}
 

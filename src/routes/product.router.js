@@ -1,15 +1,11 @@
 import express from "express";
-import { ProductManager } from "../managers/product.manager.js";
-import { Product } from "../models/product.js";
+import { productService } from "../managers/managers.js";
 
-const PRODUCT_DATA = process.env.PRODUCT_DATA || "products.json";
-
-const manager = new ProductManager(PRODUCT_DATA);
 export const router = express.Router();
 
 router.get("/", async (req, res) => {
 	try {
-		const products = await manager.getProducts();
+		const products = await productService.getProducts();
 
 		// No limit value provided. Return all products.
 		if (Object.keys(req.query).length === 0) return res.json(products);
@@ -35,7 +31,7 @@ router.get("/:pid", async (req, res) => {
 	const pid = req.params.pid;
 
 	try {
-		const product = await manager.getProductById(pid);
+		const product = await productService.getProductById(pid);
 		res.json(product);
 	} catch (productIdError) {
 		return res
@@ -46,10 +42,9 @@ router.get("/:pid", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		const product = new Product(req.body);
-		await manager.addProduct(product);
+		const result = await productService.addProduct(req.body);
 
-		res.status(200).send({ status: "Successful", message: "Product added" });
+		res.status(200).send({ status: "Successful", message: "Product added", pid: result });
 	} catch (addProductError) {
 		return res
 			.status(400)
@@ -57,21 +52,20 @@ router.post("/", async (req, res) => {
 	}
 });
 
-router.put("/:pid(\\d+)", async (req, res) => {
-	const pid = Number(req.params.pid);
+router.put("/:pid", async (req, res) => {
+	const pid = req.params.pid;
 	req.body.id = pid;
 
 	try {
-		const product = await manager.getProductById(pid);
-		const tmp = { ...product, ...req.body };
-		const update = new Product(tmp);
-		await manager.updateProduct(update);
+		const product = await productService.getProductById(pid);
+		const update = { ...product, ...req.body };
+		const result = await productService.updateProduct(update);
 
-		const updated = await manager.getProductById(pid);
+		const updated = await productService.getProductById(pid);
 		res.status(200).send({
 			status: "Successful",
 			message: "Product updated",
-			product: updated,
+			pid: result,
 		});
 	} catch (updateProductError) {
 		return res
@@ -80,15 +74,15 @@ router.put("/:pid(\\d+)", async (req, res) => {
 	}
 });
 
-router.delete("/:pid(\\d+)", async (req, res) => {
-	const pid = Number(req.params.pid);
+router.delete("/:pid", async (req, res) => {
+	const pid = req.params.pid;
 
 	try {
-		await manager.deleteProduct(pid);
+		await productService.deleteProduct(pid);
 		res.status(200).send({ status: "Successful", message: "Product deleted" });
 	} catch (deleteProductError) {
 		return res
 			.status(400)
-			.send({ status: "Error", message: `${updateProductError}` });
+			.send({ status: "Error", message: `${deleteProductError}` });
 	}
 });

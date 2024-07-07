@@ -1,21 +1,18 @@
-import { Product } from "../models/product.js";
-import { FileRepository } from "../repositories/file.repository.js";
+import { FileRepository } from "../../repositories/file.repository.js";
+import Product from "../filesystem/models/product.js";
 
-export class ProductManager {
+export default class ProductManager {
 	#repository;
 
-	constructor(dataFilename = "") {
-		this.#repository = new FileRepository(dataFilename);
+	constructor(filename) {
+		if (!filename) {
+			throw new Error("Filename is not provided");
+		}
+		this.#repository = new FileRepository(filename);
 	}
 
-	async addProduct(newProduct) {
-		// Only instances of Product class can be added
-		const isValid = newProduct instanceof Product;
-		if (!isValid) {
-			throw new Error(
-				"Unable to add new product to ProductManager: newProduct is not an instance of Product",
-			);
-		}
+	async addProduct(product) {
+		const newProduct = new Product(product);
 
 		// Unique code is needed for each product
 		const isCodeUnique = await this.#isUnique({
@@ -23,9 +20,7 @@ export class ProductManager {
 			value: newProduct.code,
 		});
 		if (!isCodeUnique) {
-			throw new Error(
-				`Unable to add new product to ProductManager: Code ${newProduct.code} is not unique.`,
-			);
+			throw new Error(`Product Code ${newProduct.code} is not unique.`);
 		}
 
 		// Unique ID is needed for each product
@@ -34,13 +29,11 @@ export class ProductManager {
 			value: newProduct.id,
 		});
 		if (!isIdUnique) {
-			throw new Error(
-				`Unable to add new product to ProductManager: UUID ${newProduct.code} is not unique.`,
-			);
+			throw new Error(`Product ID ${newProduct.id} is not unique.`);
 		}
 
-		await this.#repository.addData(newProduct);
-		return newProduct;
+		const result = await this.#repository.addData(newProduct);
+		return result;
 	}
 
 	async getProducts() {
@@ -71,7 +64,8 @@ export class ProductManager {
 
 	async updateProduct(product) {
 		const identifier = { key: "id", value: product.id };
-		await this.#repository.updateDataByIdentifier(identifier, product);
+		const result = await this.#repository.updateDataByIdentifier(identifier, product);
+		return result;
 	}
 
 	async deleteProduct(id) {
