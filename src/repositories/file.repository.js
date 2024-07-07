@@ -164,9 +164,7 @@ export class FileRepository {
 		);
 
 		if (dataIndex === -1) {
-			throw new Error(
-				`Unable to find data with identifier ${identifier}`,
-			);
+			throw new Error(`Unable to find data with identifier ${identifier}`);
 		}
 
 		fileData[dataIndex] = update;

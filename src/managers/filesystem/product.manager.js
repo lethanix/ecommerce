@@ -64,7 +64,10 @@ export default class ProductManager {
 
 	async updateProduct(product) {
 		const identifier = { key: "id", value: product.id };
-		const result = await this.#repository.updateDataByIdentifier(identifier, product);
+		const result = await this.#repository.updateDataByIdentifier(
+			identifier,
+			product,
+		);
 		return result;
 	}
 
