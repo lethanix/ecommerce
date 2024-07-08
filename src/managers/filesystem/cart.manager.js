@@ -18,10 +18,10 @@ export default class CartManager {
 
 	/**
 	 * Create a new cart and add it to the repository
-	 * @param {Cart} newCart Cart to be added
+	 *
 	 */
-	async addCart(cart) {
-		const newCart = new Cart(cart);
+	async addCart() {
+		const newCart = new Cart();
 		const result = await this.#repository.addData(newCart);
 
 		return result;
@@ -29,8 +29,8 @@ export default class CartManager {
 
 	/**
 	 * Add a product to cart with the given ID
-	 * @param {number} cartId ID of the cart to update
-	 * @param {number} productId ID of the product to be added to the cart
+	 * @param {String} cartId ID of the cart to update
+	 * @param {String} productId ID of the product to be added to the cart
 	 */
 	async addProduct(cartId, productId) {
 		const identifier = { key: "id", value: cartId };
@@ -52,14 +52,17 @@ export default class CartManager {
 			cart.products[idx].quantity += 1;
 		}
 
-		const result = await this.#repository.updateDataByIdentifier(identifier, cart);
+		const result = await this.#repository.updateDataByIdentifier(
+			identifier,
+			cart,
+		);
 
 		return result;
 	}
 
 	/**
 	 * Get the products contained in a given cart
-	 * @param {number} cartId ID of the cart
+	 * @param {String} cartId ID of the cart
 	 * @returns {Promise<Array.<Object>>}
 	 */
 	async getProducts(cartId) {
@@ -72,11 +75,7 @@ export default class CartManager {
 			);
 		}
 
-		if (Array.isArray(cart)) {
-			const products = cart[0].products;
-			return [...products];
-		}
-
-		return null;
+		const products = cart.products;
+		return [...products];
 	}
 }

@@ -1,10 +1,9 @@
 export default class Cart {
-	static #cartsCreated = 0;
 	#id;
 	#products;
 
 	constructor() {
-		this.#id = Cart.#cartsCreated++;
+		this.#id = crypto.randomUUID();
 		this.#products = [];
 	}
 

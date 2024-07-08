@@ -1,1 +1,19 @@
-[]
+[
+	{
+		"id": "e3580cb2-fd50-4584-9e9d-dca1418daa0e",
+		"products": [
+			{
+				"product": "a2e3f8ad-1f9b-4507-81b2-3f010bc50f84",
+				"quantity": 2
+			},
+			{
+				"product": "73b166b8-e56f-4787-bc4f-495cdcec3ae1",
+				"quantity": 1
+			}
+		]
+	},
+	{
+		"id": "4e604af6-a7e5-4ecc-8a37-5d6c2fd062ec",
+		"products": []
+	}
+]
