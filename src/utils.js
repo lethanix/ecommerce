@@ -13,4 +13,4 @@ export const __filespath = path.join(__dirname, "db");
 // Env utils
 export const PRODUCT_REPOSITORY_NAME =
 	process.env.PRODUCT_REPOSITORY_NAME || "products";
-export const CART_REPOSITORY_NAME = process.env.CART_REPOSITORY_NAME || "cart";
+export const CART_REPOSITORY_NAME = process.env.CART_REPOSITORY_NAME || "carts";
