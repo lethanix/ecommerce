@@ -20,16 +20,11 @@ export default class CartManager {
 	 * Create a new cart and add it to the repository
 	 * @param {Cart} newCart Cart to be added
 	 */
-	async addCart(newCart) {
-		// Only instances of Cart class can be added
-		const isValid = newCart instanceof Cart;
-		if (!isValid) {
-			throw new Error(
-				"Unable to add new cart to CartManager: newCart is not an instance of Cart",
-			);
-		}
+	async addCart(cart) {
+		const newCart = new Cart(cart);
+		const result = await this.#repository.addData(newCart);
 
-		await this.#repository.addData(newCart);
+		return result;
 	}
 
 	/**
@@ -39,15 +34,13 @@ export default class CartManager {
 	 */
 	async addProduct(cartId, productId) {
 		const identifier = { key: "id", value: cartId };
-		const cartArray = await this.#repository.getDataByIdentifier(identifier);
+		const cart = await this.#repository.getDataByIdentifier(identifier);
 
-		if (cartArray === null) {
+		if (cart === null) {
 			throw new Error(
 				`Unable to add product to cart: cart id ${cartId} not found`,
 			);
 		}
-
-		const cart = cartArray[0];
 
 		// Verify if product is already in the cart
 		const idx = cart.products.findIndex((p) => p.product === productId);
@@ -59,7 +52,9 @@ export default class CartManager {
 			cart.products[idx].quantity += 1;
 		}
 
-		await this.#repository.updateDataByIdentifier(identifier, cart);
+		const result = await this.#repository.updateDataByIdentifier(identifier, cart);
+
+		return result;
 	}
 
 	/**

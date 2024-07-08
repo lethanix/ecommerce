@@ -34,13 +34,13 @@ router.post("/:cid(\\d+)/product/:pid", async (req, res) => {
 	const pid = req.params.pid;
 
 	try {
-		await cartService.addProduct(cid, pid);
+		const result = await cartService.addProduct(cid, pid);
 		res
 			.status(200)
-			.send({ status: "Successful", message: "Product added to cart" });
-	} catch (addProductError) {
+			.send({ status: "Successful", message: `Product ${pid} added to cart`, cid: result });
+	} catch (addCartError) {
 		return res
 			.status(400)
-			.send({ status: "Error", error: `${addProductError}` });
+			.send({ status: "Error", error: `${addCartError}` });
 	}
 });
