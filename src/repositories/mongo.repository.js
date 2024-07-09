@@ -42,8 +42,8 @@ export default class MongoRepository {
 	 *
 	 * @returns {Object[]} Array of objects containing the data
 	 */
-	async getData(opts = {}) {
-		return this.#model.find(opts);
+	async getData(filter = {}, opts = {}) {
+		return this.#model.paginate(filter, opts);
 	}
 
 	/**

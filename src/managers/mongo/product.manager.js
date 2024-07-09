@@ -24,8 +24,8 @@ export default class ProductManager {
 		return result._id;
 	}
 
-	async getProducts() {
-		return await this.#repository.getData();
+	async getProducts(filter = {}, opts = {}) {
+		return await this.#repository.getData(filter, opts);
 	}
 
 	async getProductById(id) {

@@ -11,6 +11,7 @@ export const __dirname = import.meta.dirname;
 export const __filespath = path.join(__dirname, "db");
 
 // Env utils
+export const PORT = Number.parseInt(process.env.PORT) || 8080;
 export const PRODUCT_REPOSITORY_NAME =
 	process.env.PRODUCT_REPOSITORY_NAME || "products";
 export const CART_REPOSITORY_NAME = process.env.CART_REPOSITORY_NAME || "carts";

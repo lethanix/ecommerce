@@ -8,11 +8,11 @@ import { router as cartRoutes } from "./routes/cart.router.js";
 import { router as productRoutes } from "./routes/product.router.js";
 import { router as realtimeRoutes } from "./routes/realtime.router.js";
 import { router as viewRoutes } from "./routes/view.router.js";
+import { PORT } from "./utils.js";
 import { __dirname } from "./utils.js";
 
 // Setup Express server
 const app = express();
-const PORT = Number.parseInt(process.env.PORT) || process.argv[3] || 8080;
 const server = app.listen(PORT, () => {
 	console.log(`Server listening on port ${PORT}`);
 });

@@ -1,28 +1,64 @@
 import express from "express";
 import { managerService } from "../managers/managers.js";
+import { PORT } from "../utils.js";
 
 export const router = express.Router();
 const productService = managerService("product");
 
 router.get("/", async (req, res) => {
 	try {
-		const products = await productService.getProducts();
-
-		// No limit value provided. Return all products.
-		if (Object.keys(req.query).length === 0) return res.json(products);
+		const limitStr = req.query.limit ?? "10";
+		const pageStr = req.query.page ?? "1";
 
 		// Verify if there is character different from a digit
-		const limit = req.query.limit;
 		const regex = /\D+/g;
-		if (limit.match(regex)) {
+		if (limitStr.match(regex)) {
 			return res.status(400).send({
 				status: "Error",
 				error: `Limit is not a valid number: ${limit}`,
 			});
 		}
 
-		const limitedProducts = products.slice(0, limit);
-		res.json(limitedProducts);
+		if (pageStr.match(regex)) {
+			return res.status(400).send({
+				status: "Error",
+				error: `Page is not a valid number: ${limit}`,
+			});
+		}
+
+		const options = {
+			limit: Number(limitStr),
+			page: Number(pageStr),
+			// lean: true, // Use it when we need to send the data to the view (dehydration)
+		};
+
+		const paginationData = await productService.getProducts({}, options);
+
+		const prevPage = paginationData.prevPage;
+		const nextPage = paginationData.nextPage;
+		const hasPrevPage = paginationData.hasPrevPage;
+		const hasNextPage = paginationData.hasNextPage;
+		const prevLink = hasPrevPage
+			? `localhost:${PORT}/api/products?page=${prevPage}`
+			: null;
+		const nextLink = hasNextPage
+			? `localhost:${PORT}/api/products?page=${nextPage}`
+			: null;
+
+		const result = {
+			status: "Success",
+			payload: paginationData.docs,
+			totalPages: paginationData.totalPages,
+			prevPage,
+			nextPage,
+			page: paginationData.page,
+			hasPrevPage,
+			hasNextPage,
+			prevLink,
+			nextLink,
+		};
+
+		res.send(result);
 	} catch (productsError) {
 		return res.status(400).send({ status: "Error", error: `${productsError}` });
 	}
