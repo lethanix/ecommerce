@@ -1,19 +1,18 @@
 import repositoryService from "../../repositories/repositories.js";
-import Cart from "../filesystem/models/cart.js";
 
 export default class CartManager {
 	#repository;
 
 	/**
 	 * Create a repository of carts to manage
-	 * @param {string} dataFilename="" Name of the repository
+	 * @param {string} collection - Name of the collection in the repository
 	 */
-	constructor(dataFilename) {
-		if (!dataFilename) {
-			throw new Error("Filename is not provided");
+	constructor(collection) {
+		if (!collection) {
+			throw new Error("Collection name is not provided");
 		}
 
-		this.#repository = repositoryService(dataFilename);
+		this.#repository = repositoryService(collection);
 	}
 
 	/**
@@ -21,10 +20,7 @@ export default class CartManager {
 	 *
 	 */
 	async addCart() {
-		const newCart = new Cart();
-		const result = await this.#repository.addData(newCart);
-
-		return result;
+		return await this.#repository.addData();
 	}
 
 	/**

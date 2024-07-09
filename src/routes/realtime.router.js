@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { productService } from "../managers/managers.js";
+import { managerService } from "../managers/managers.js";
 
 export const router = Router();
+const productService = managerService("product");
 
 router.post("/", async (req, res) => {
 	try {

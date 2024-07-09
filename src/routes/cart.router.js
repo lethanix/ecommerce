@@ -1,7 +1,8 @@
 import express from "express";
-import { cartService } from "../managers/managers.js";
+import { managerService } from "../managers/managers.js";
 
 export const router = express.Router();
+const cartService = managerService("cart");
 
 /**
  * Create new cart

@@ -1,7 +1,8 @@
 import express from "express";
-import { productService } from "../managers/managers.js";
+import { managerService } from "../managers/managers.js";
 
 export const router = express.Router();
+const productService = managerService("product");
 
 router.get("/", async (req, res) => {
 	try {
@@ -59,11 +60,8 @@ router.put("/:pid", async (req, res) => {
 	req.body.id = pid;
 
 	try {
-		const product = await productService.getProductById(pid);
-		const update = { ...product, ...req.body };
-		const result = await productService.updateProduct(update);
+		const result = await productService.updateProduct(req.body);
 
-		const updated = await productService.getProductById(pid);
 		res.status(200).send({
 			status: "Successful",
 			message: "Product updated",

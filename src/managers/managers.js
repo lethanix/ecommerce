@@ -1,6 +1,47 @@
-import { CART_REPOSITORY_NAME, PRODUCT_REPOSITORY_NAME } from "../utils.js";
-import CartManager from "./filesystem/cart.manager.js";
-import ProductManager from "./filesystem/product.manager.js";
+import {
+	CART_REPOSITORY_NAME,
+	DB_TYPE,
+	PRODUCT_REPOSITORY_NAME,
+} from "../utils.js";
+import FsCartManager from "./filesystem/cart.manager.js";
+import FsProductManager from "./filesystem/product.manager.js";
+import MongoCartManager from "./mongo/cart.manager.js";
+import cartsModel from "./mongo/models/cart.js";
+import productsModel from "./mongo/models/product.js";
+import MongoProductManager from "./mongo/product.manager.js";
 
-export const productService = new ProductManager(PRODUCT_REPOSITORY_NAME);
-export const cartService = new CartManager(CART_REPOSITORY_NAME);
+/**
+ * Object containing the reference to the models for
+ * file system and mongoDB repositories
+ */
+const models = {
+	productsModel,
+	cartsModel,
+};
+
+/**
+ * Factory function to obtain the proper model
+ *
+ * @param {String} name - Name of the model/class to get (i.e., product or cart)
+ * @returns Reference to model
+ */
+export function getModel(name) {
+	const modelName = `${name.toLocaleLowerCase()}Model`;
+	return models[modelName];
+}
+
+function productService() {
+	if (DB_TYPE === "fs") return new FsProductManager(PRODUCT_REPOSITORY_NAME);
+	if (DB_TYPE === "mongo")
+		return new MongoProductManager(PRODUCT_REPOSITORY_NAME);
+}
+
+function cartService() {
+	if (DB_TYPE === "fs") return new FsCartManager(CART_REPOSITORY_NAME);
+	if (DB_TYPE === "mongo") return new MongoCartManager(CART_REPOSITORY_NAME);
+}
+
+export function managerService(managerName) {
+	if (managerName === "product") return productService();
+	if (managerName === "cart") return cartService();
+}

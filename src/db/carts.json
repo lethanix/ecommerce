@@ -8,12 +8,16 @@
 			},
 			{
 				"product": "73b166b8-e56f-4787-bc4f-495cdcec3ae1",
-				"quantity": 1
+				"quantity": 3
 			}
 		]
 	},
 	{
-		"id": "4e604af6-a7e5-4ecc-8a37-5d6c2fd062ec",
+		"id": "f77a458a-1f6e-4f39-8192-d55273dc28f8",
+		"products": []
+	},
+	{
+		"id": "d35b928b-4296-4d88-aea8-faa22fa11503",
 		"products": []
 	}
 ]

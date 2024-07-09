@@ -22,14 +22,14 @@
 		"category": "Self-care"
 	},
 	{
-		"id": "73b166b8-e56f-4787-bc4f-495cdcec3ae1",
-		"title": "Handcrafted Soft Ball",
-		"description": "Computer",
-		"price": 655.5,
+		"id": "35ac4229-116d-4d24-9e60-10b96ca3a23e",
+		"title": "Gorgeous Fresh Chicken",
+		"description": "Car",
+		"price": "572.01",
 		"thumbnail": [],
-		"code": "c8b5d1e3-f3ea-4827-85aa-266cf5669ecd",
-		"stock": 617,
+		"code": "cec65a7c-5ad9-424d-a0af-bca60c2260dd",
+		"stock": 569,
 		"status": true,
-		"category": "Generic"
+		"category": "Gorgeous"
 	}
 ]

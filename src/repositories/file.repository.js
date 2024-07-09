@@ -9,7 +9,7 @@ import { __filespath } from "../utils.js";
  *
  * @class
  */
-export class FileRepository {
+export default class FileRepository {
 	#filename;
 
 	/**
@@ -167,7 +167,8 @@ export class FileRepository {
 			throw new Error(`Unable to find data with identifier ${identifier}`);
 		}
 
-		fileData[dataIndex] = update;
+		const dataUpdate = { ...fileData[dataIndex], ...update };
+		fileData[dataIndex] = dataUpdate;
 		await fs.writeFile(this.#filename, JSON.stringify(fileData, null, "\t"), {
 			encoding: "utf-8",
 		});

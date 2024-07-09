@@ -1,4 +1,4 @@
-import { FileRepository } from "../../repositories/file.repository.js";
+import repositoryService from "../../repositories/repositories.js";
 import Product from "../filesystem/models/product.js";
 
 export default class ProductManager {
@@ -8,7 +8,7 @@ export default class ProductManager {
 		if (!filename) {
 			throw new Error("Filename is not provided");
 		}
-		this.#repository = new FileRepository(filename);
+		this.#repository = repositoryService(filename);
 	}
 
 	async addProduct(product) {
