@@ -60,15 +60,8 @@ export default class CartManager {
 	 */
 	async getProducts(cartId) {
 		const identifier = { key: "id", value: cartId };
-		const populate = {
-			enabled: true,
-			modelName: "products",
-		};
 
-		const cart = await this.#repository.getDataByIdentifier(
-			identifier,
-			populate,
-		);
+		const cart = await this.#repository.getDataByIdentifier(identifier);
 
 		if (cart === null) {
 			throw new Error(

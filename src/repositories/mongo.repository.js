@@ -65,46 +65,22 @@ export default class MongoRepository {
 	 * @param {Object} identifier - The identifier to use to find the data
 	 * @param {string} identifier.key - The name of the key to use as an identifier (id or code available)
 	 * @param {any} identifier.value - The value assigned to the key
-	 * @param {Object} populate - Optional object containing the information to use the `populate()` function
-	 * @param {boolean} populate.enabled - If true, it will use the function with the `modelName`
-	 * @param {string} populate.modelName - The name of the model to use
 	 * @returns {Object} dataIdentified - The object found in the data file
 	 */
-	async getDataByIdentifier(
-		identifier,
-		populate = { enabled: false, modelName: "products" },
-	) {
+	async getDataByIdentifier(identifier) {
 		const { key, value } = identifier;
 
 		if (key === undefined || value === undefined) {
 			throw new Error("Please provide an identifier to fetch the data");
 		}
 
-		if (key === "id" && !populate.enabled) {
+		if (key === "id") {
 			const dataIdentified = await this.#model.findOne({ _id: value });
 			return dataIdentified || null;
 		}
 
-		if (key === "code" && !populate.enabled) {
+		if (key === "code") {
 			const dataIdentified = await this.#model.findOne({ code: value });
-			return dataIdentified || null;
-		}
-
-		if (key === "id" && populate.enabled) {
-			const singular = populate.modelName.slice(0, -1);
-			const path = `${populate.modelName}.${singular}`;
-			const dataIdentified = await this.#model
-				.findOne({ _id: value })
-				.populate(path);
-			return dataIdentified || null;
-		}
-
-		if (key === "code" && populate.enabled) {
-			const singular = populate.modelName.slice(0, -1);
-			const path = `${populate.modelName}s.${singular}`;
-			const dataIdentified = await this.#model
-				.findOne({ code: value })
-				.populate(path);
 			return dataIdentified || null;
 		}
 	}
