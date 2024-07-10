@@ -39,7 +39,9 @@ export default class CartManager {
 		}
 
 		// Verify if product is already in the cart
-		const idx = cart.products.findIndex((p) => p.product === productId);
+		const idx = cart.products.findIndex(
+			(p) => p.product._id.toString() === productId,
+		);
 
 		// If product is in the cart, increment the quantity.
 		if (idx === -1) {
@@ -48,12 +50,7 @@ export default class CartManager {
 			cart.products[idx].quantity += 1;
 		}
 
-		const result = await this.#repository.updateDataByIdentifier(
-			identifier,
-			cart,
-		);
-
-		return result;
+		return await this.#repository.updateDataByIdentifier(identifier, cart);
 	}
 
 	/**
@@ -63,7 +60,15 @@ export default class CartManager {
 	 */
 	async getProducts(cartId) {
 		const identifier = { key: "id", value: cartId };
-		const cart = await this.#repository.getDataByIdentifier(identifier);
+		const populate = {
+			enabled: true,
+			modelName: "products",
+		};
+
+		const cart = await this.#repository.getDataByIdentifier(
+			identifier,
+			populate,
+		);
 
 		if (cart === null) {
 			throw new Error(
