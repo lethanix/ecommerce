@@ -16,9 +16,16 @@ const schema = new mongoose.Schema({
 		required: true,
 		unique: true,
 	},
+	age: {
+		type: Number,
+	},
 	password: {
 		type: String,
 		required: true,
+	},
+	cart: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Carts",
 	},
 	role: {
 		type: String,
