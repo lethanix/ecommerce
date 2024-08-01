@@ -25,3 +25,11 @@ router.get("/realtimeproducts", async (req, res) => {
 		res.status(400).send({ status: "Error", error: `${realtimeRenderError}` });
 	}
 });
+
+router.get("/register", async (req, res) => {
+	try {
+		res.render("register");
+	} catch (registerRenderError) {
+		res.status(500).send({ status: "Error", error: `${registerRenderError}` });
+	}
+});

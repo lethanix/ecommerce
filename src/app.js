@@ -8,6 +8,7 @@ import { router as cartRoutes } from "./routes/cart.router.js";
 import { router as productRoutes } from "./routes/product.router.js";
 import { router as realtimeRoutes } from "./routes/realtime.router.js";
 import { router as viewRoutes } from "./routes/view.router.js";
+import { router as sessionRoutes } from "./routes/sessions.router.js";
 import { PORT } from "./utils.js";
 import { __dirname } from "./utils.js";
 
@@ -41,6 +42,7 @@ app.use(cors());
 app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/realtimeproducts", realtimeRoutes);
+app.use("/api/sessions", sessionRoutes);
 app.use("/", viewRoutes);
 
 io.on("connection", (socket) => {
