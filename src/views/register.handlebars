@@ -1,6 +1,6 @@
 <div id="parent-div">
     <h1>Signup</h1>
-    <form id="registerForm" hx-post="/api/sessions/register">
+    <form id="registerForm" hx-post="/api/sessions/register" hx-target="next output">
     {{!-- hx-target="#parent-div"
     hx-swap="outerHTML"> --}}
         <label>Name</label>
@@ -20,6 +20,12 @@
         <br />
         <input type="submit">
     </form>
+
+    <br/>
+    <output>
+    </output>
+    <br/>
+    <button hx-get="/login" hx-target="#parent-div" hx-push-url="true">Login</button>
 </div>
 
 <script src="/js/htmx.min.js"></script>

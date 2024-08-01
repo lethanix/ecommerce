@@ -33,3 +33,11 @@ router.get("/register", async (req, res) => {
 		res.status(500).send({ status: "Error", error: `${registerRenderError}` });
 	}
 });
+
+router.get("/login", async (req, res) => {
+	try {
+		res.render("login");
+	} catch (loginRenderError) {
+		res.status(500).send({ status: "Error", error: `${loginRenderError}` });
+	}
+});
