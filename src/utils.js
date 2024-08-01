@@ -15,5 +15,6 @@ export const PORT = Number.parseInt(process.env.PORT) || 8080;
 export const PRODUCT_REPOSITORY_NAME =
 	process.env.PRODUCT_REPOSITORY_NAME || "products";
 export const CART_REPOSITORY_NAME = process.env.CART_REPOSITORY_NAME || "carts";
+export const USER_REPOSITORY_NAME = process.env.USER_REPOSITORY_NAME || "users";
 export const ATLAS_URI = process.env.ATLAS_URI;
 export const DB_TYPE = process.env.DB_TYPE || "mongo"; // ["mongo", "fs"]
