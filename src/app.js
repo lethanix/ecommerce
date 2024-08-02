@@ -1,12 +1,16 @@
 import path from "node:path";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import handlebars from "express-handlebars";
+import passport from "passport";
 import { Server } from "socket.io";
 
+import initializePassportConfig from "./config/passport.config.js";
 import { router as cartRoutes } from "./routes/cart.router.js";
 import { router as productRoutes } from "./routes/product.router.js";
 import { router as realtimeRoutes } from "./routes/realtime.router.js";
+import { router as sessionRoutes } from "./routes/sessions.router.js";
 import { router as viewRoutes } from "./routes/view.router.js";
 import { PORT } from "./utils.js";
 import { __dirname } from "./utils.js";
@@ -36,11 +40,17 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
+
+// Auth setup
+initializePassportConfig();
+app.use(passport.initialize());
 
 // Setup routes
 app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/realtimeproducts", realtimeRoutes);
+app.use("/api/sessions", sessionRoutes);
 app.use("/", viewRoutes);
 
 io.on("connection", (socket) => {

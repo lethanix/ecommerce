@@ -1,0 +1,36 @@
+<div id="parent-div">
+    <h1>Signup</h1>
+    <form id="registerForm" 
+        hx-post="/api/sessions/register"
+        hx-target="next output"
+        hx-ext="json-enc" >
+
+        <label>Name</label>
+        <input name="firstName">
+        <br />
+        <label>Last name</label>
+        <input name="lastName">
+        <br />
+        <label>Email</label>
+        <input name="email">
+        <br />
+        <label>Birthdate</label>
+        <input type="date" name="birthDate">
+        <br />
+        <label>Password</label>
+        <input name="password">
+        <br />
+        <input type="submit">
+    </form>
+
+    <br/>
+    <output>
+
+    </output>
+    <br/>
+    <br/>
+    <button hx-get="/login" hx-target="#parent-div" hx-push-url="true">Login</button>
+</div>
+
+<script src="/js/htmx.min.js"></script>
+<script src="/js/json-enc.js"></script>

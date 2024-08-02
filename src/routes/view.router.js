@@ -1,4 +1,5 @@
 import { Router } from "express";
+import passport from "passport";
 import { managerService } from "../managers/managers.js";
 
 export const router = Router();
@@ -25,3 +26,23 @@ router.get("/realtimeproducts", async (req, res) => {
 		res.status(400).send({ status: "Error", error: `${realtimeRenderError}` });
 	}
 });
+
+router.get("/register", async (req, res) => {
+	res.render("register");
+});
+
+router.get("/login", async (req, res) => {
+	res.render("login");
+});
+
+router.get(
+	"/profile",
+	passport.authenticate("current", { session: false }),
+	(req, res) => {
+		if (!req.user) {
+			return res.redirect("/login");
+		}
+
+		res.render("profile", { user: req.user });
+	},
+);

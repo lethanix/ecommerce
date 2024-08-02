@@ -1,0 +1,22 @@
+<div id="parent-div">
+    <h1>Login</h1>
+
+    <form id="loginForm"
+    hx-post="/api/sessions/login"
+    hx-end="json-enc"
+    hx-push-url="/profile"
+    hx-target="#parent-div"
+    hx-swap="outerHTML">
+
+        <label>Email</label>
+        <input name="email">
+        <br/>
+        <label>Password</label>
+        <input name="password">
+        <br/>
+        <input type="submit">
+    </form>
+</div>
+
+<script src="/js/htmx.min.js"></script>
+<script src="/js/json-enc.js"></script>

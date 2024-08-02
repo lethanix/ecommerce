@@ -1,0 +1,11 @@
+<div id="parent-div">
+    <h1>Welcome</h1>
+
+
+    <p>Name: {{user.name}}</p>
+    <p>Role: {{user.role}}</p>
+
+    <button hx-get="/api/sessions/logout" hx-target="#parent-div" hx-swap="outerHTML" hx-push-url="/login">Logout</button>
+</div>
+
+<script src="/js/htmx.min.js"></script>
