@@ -4,6 +4,7 @@
         hx-post="/api/sessions/register"
         hx-target="next output"
         hx-ext="json-enc" >
+
         <label>Name</label>
         <input name="firstName">
         <br />
@@ -24,7 +25,9 @@
 
     <br/>
     <output>
+
     </output>
+    <br/>
     <br/>
     <button hx-get="/login" hx-target="#parent-div" hx-push-url="true">Login</button>
 </div>

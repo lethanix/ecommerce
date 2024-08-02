@@ -18,3 +18,5 @@ export const CART_REPOSITORY_NAME = process.env.CART_REPOSITORY_NAME || "carts";
 export const USER_REPOSITORY_NAME = process.env.USER_REPOSITORY_NAME || "users";
 export const ATLAS_URI = process.env.ATLAS_URI;
 export const DB_TYPE = process.env.DB_TYPE || "mongo"; // ["mongo", "fs"]
+export const SESSION_SECRET =
+	process.env.SESSION_SECRET || "the$joke%is^on&mankind*";

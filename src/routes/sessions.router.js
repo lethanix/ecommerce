@@ -1,21 +1,43 @@
 import { Router } from "express";
-import { managerService } from "../managers/managers.js";
+import jwt from "jsonwebtoken";
 import { passportStrategy } from "../middlewares/passportStrategy.js";
-import AuthService from "../services/auth.js";
+import { SESSION_SECRET } from "../utils.js";
 
 export const router = Router();
 
-const userService = managerService("users");
-
 router.post("/register", passportStrategy("signup"), async (req, res) => {
-	res.send({ status: "success", message: "Successful registration", email: req.user.email });
+	res.send({
+		status: "success",
+		message: "Successful registration",
+		email: req.user.email,
+	});
 });
 
-router.post("/login", async (req, res) => {
-	try {
-		console.log(req.body);
-		res.status(200).json({ status: "success", message: "Logged in" });
-	} catch (loginError) {
-		res.status(400).send({ status: "Error", error: `${loginError}` });
+router.post("/login", passportStrategy("login"), async (req, res) => {
+	const { firstName, lastName, role, _id } = req.user;
+	//** Create JWT session
+	const session = {
+		name: `${firstName} ${lastName}`,
+		role: role,
+		id: _id,
+	};
+
+	const token = jwt.sign(session, SESSION_SECRET, { expiresIn: "1d" });
+
+	res
+		.cookie("chaosCookie", token)
+		.redirect("/profile")
+		// .send({ status: "Success", message: "Logged in successfully" });
+});
+
+router.get("/current",  passportStrategy("current"), async (req, res) => {
+	if (!req.user) {
+		return res.status(401).send({ status: "Error", message: "Not logged in" });
 	}
+
+	res.send(req.user);
+});
+
+router.get("/logout", async (req, res) => {
+	res.clearCookie("chaosCookie").render("login");
 });

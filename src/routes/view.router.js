@@ -1,4 +1,5 @@
 import { Router } from "express";
+import passport from "passport";
 import { managerService } from "../managers/managers.js";
 
 export const router = Router();
@@ -27,17 +28,21 @@ router.get("/realtimeproducts", async (req, res) => {
 });
 
 router.get("/register", async (req, res) => {
-	try {
-		res.render("register");
-	} catch (registerRenderError) {
-		res.status(500).send({ status: "Error", error: `${registerRenderError}` });
-	}
+	res.render("register");
 });
 
 router.get("/login", async (req, res) => {
-	try {
-		res.render("login");
-	} catch (loginRenderError) {
-		res.status(500).send({ status: "Error", error: `${loginRenderError}` });
-	}
+	res.render("login");
 });
+
+router.get(
+	"/profile",
+	passport.authenticate("current", { session: false }),
+	(req, res) => {
+		if (!req.user) {
+			return res.redirect("/login");
+		}
+
+		res.render("profile", { user: req.user });
+	},
+);

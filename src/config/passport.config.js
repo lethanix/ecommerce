@@ -4,9 +4,11 @@ import { Strategy as LocalStrategy } from "passport-local";
 
 import { managerService } from "../managers/managers.js";
 import AuthService from "../services/auth.js";
+import { SESSION_SECRET } from "../utils.js";
 const usersService = managerService("users");
 
 const initializePassportConfig = () => {
+	//*** Register Strategy
 	passport.use(
 		"signup",
 		new LocalStrategy(
@@ -47,6 +49,55 @@ const initializePassportConfig = () => {
 			},
 		),
 	);
+
+	//*** Login Strategy
+	passport.use(
+		"login",
+		new LocalStrategy(
+			{ usernameField: "email" },
+			async (email, password, done) => {
+				// Validate user existence in the db
+				const user = await usersService.getUserByEmail(email);
+				if (!user) {
+					return done(null, false, {
+						message: "Username or password is incorrect",
+					});
+				}
+
+				// Validate password
+				const authService = new AuthService();
+				const passwordIsValid = await authService.validatePassword(
+					password,
+					user.password,
+				);
+				if (!passwordIsValid) {
+					return done(null, false, {
+						message: "Username or password is incorrect",
+					});
+				}
+
+				return done(null, user);
+			},
+		),
+	);
+
+	//*** Current Strategy
+	passport.use(
+		"current",
+		new JWTStrategy(
+			{
+				secretOrKey: SESSION_SECRET,
+				jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+			},
+			async (payload, done) => {
+				return done(null, payload);
+			},
+		),
+	);
 };
+
+function cookieExtractor(req) {
+	return req?.cookies?.["chaosCookie"];
+}
 
 export default initializePassportConfig;

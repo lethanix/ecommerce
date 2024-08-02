@@ -1,4 +1,5 @@
 import path from "node:path";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import handlebars from "express-handlebars";
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // Auth setup
 initializePassportConfig();
