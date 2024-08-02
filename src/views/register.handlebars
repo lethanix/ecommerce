@@ -1,8 +1,9 @@
 <div id="parent-div">
     <h1>Signup</h1>
-    <form id="registerForm" hx-post="/api/sessions/register" hx-target="next output">
-    {{!-- hx-target="#parent-div"
-    hx-swap="outerHTML"> --}}
+    <form id="registerForm" 
+        hx-post="/api/sessions/register"
+        hx-target="next output"
+        hx-ext="json-enc" >
         <label>Name</label>
         <input name="firstName">
         <br />
@@ -29,3 +30,4 @@
 </div>
 
 <script src="/js/htmx.min.js"></script>
+<script src="/js/json-enc.js"></script>

@@ -11,6 +11,7 @@ import cartsModel from "./mongo/models/cart.js";
 import productsModel from "./mongo/models/product.js";
 import usersModel from "./mongo/models/user.js";
 import MongoProductManager from "./mongo/product.manager.js";
+import MongoUserManager from "./mongo/user.manager.js";
 
 /**
  * Object containing the reference to the models for
@@ -47,7 +48,7 @@ function cartService() {
 function userService() {
 	if (DB_TYPE === "fs")
 		return new Error("FileSystem Manager for Users is not implemented");
-	if (DB_TYPE === "mongo") return new MongoCartManager(USER_REPOSITORY_NAME);
+	if (DB_TYPE === "mongo") return new MongoUserManager(USER_REPOSITORY_NAME);
 }
 
 export function managerService(managerName) {

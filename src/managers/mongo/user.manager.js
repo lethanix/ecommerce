@@ -12,4 +12,8 @@ export default class UserManager {
 	getUserByEmail(email) {
 		return usersModel.findOne({ email });
 	}
+
+	createUser(user) {
+		return usersModel.create(user);
+	}
 }
