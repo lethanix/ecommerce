@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { getModel } from "../managers/managers.js";
+import { getModel } from "../db/managers.js";
 import { ATLAS_URI } from "../utils.js";
 
 /**

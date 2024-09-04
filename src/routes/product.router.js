@@ -1,5 +1,5 @@
 import express from "express";
-import { managerService } from "../managers/managers.js";
+import { managerService } from "../db/managers.js";
 import { PORT } from "../utils.js";
 
 export const router = express.Router();

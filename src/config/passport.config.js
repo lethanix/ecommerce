@@ -2,7 +2,7 @@ import passport from "passport";
 import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
 import { Strategy as LocalStrategy } from "passport-local";
 
-import { managerService } from "../managers/managers.js";
+import { managerService } from "../db/managers.js";
 import AuthService from "../services/auth.js";
 import { SESSION_SECRET } from "../utils.js";
 const usersService = managerService("users");
