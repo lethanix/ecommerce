@@ -56,7 +56,7 @@ const productUI = (product) => {
 
 	const button = document.createElement("button");
 	button.setAttribute("data-id", product.id);
-	button.setAttribute("onclick", "deleteProduct(this);");
+	button.setAttribute("onclick", "delete(this);");
 	button.innerHTML = "delete";
 
 	div.append(p, button);

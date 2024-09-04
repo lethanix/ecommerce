@@ -9,7 +9,7 @@ const cartService = managerService("cart");
  */
 router.post("/", async (_, res) => {
 	try {
-		const cid = await cartService.addCart();
+		const cid = await cartService.add();
 		res
 			.status(200)
 			.send({ status: "Successful", message: "Cart added", cid: cid });

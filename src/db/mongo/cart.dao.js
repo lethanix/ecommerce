@@ -1,6 +1,6 @@
 import repositoryService from "../../repositories/repositories.js";
 
-export default class CartManager {
+export default class CartDao {
 	#repository;
 
 	/**
@@ -19,7 +19,7 @@ export default class CartManager {
 	 * Create a new cart and add it to the repository
 	 *
 	 */
-	async addCart() {
+	async add() {
 		return await this.#repository.addData();
 	}
 
@@ -130,7 +130,7 @@ export default class CartManager {
 	 * @param {String} cartId ID of the cart to update
 	 * @param {Object} products Array of products with the new data
 	 */
-	async updateCart(cartId, products) {
+	async update(cartId, products) {
 		const identifier = { key: "id", value: cartId };
 		const cart = await this.#repository.getDataByIdentifier(identifier);
 

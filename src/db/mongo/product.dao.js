@@ -1,6 +1,6 @@
 import repositoryService from "../../repositories/repositories.js";
 
-export default class ProductManager {
+export default class ProductDao {
 	#repository;
 
 	constructor(collection) {
@@ -10,7 +10,7 @@ export default class ProductManager {
 		this.#repository = repositoryService(collection);
 	}
 
-	async addProduct(product) {
+	async add(product) {
 		// Unique code is needed for each product
 		const isCodeUnique = await this.#repository.getDataByIdentifier({
 			key: "code",
@@ -28,7 +28,7 @@ export default class ProductManager {
 		return await this.#repository.getData(filter, opts);
 	}
 
-	async getProductById(id) {
+	async getById(id) {
 		const product = await this.#repository.getDataByIdentifier({
 			key: "id",
 			value: id,
@@ -41,7 +41,7 @@ export default class ProductManager {
 		return product;
 	}
 
-	async updateProduct(product) {
+	async update(product) {
 		const identifier = { key: "id", value: product.id };
 		const result = await this.#repository.updateDataByIdentifier(
 			identifier,
@@ -50,7 +50,7 @@ export default class ProductManager {
 		return result;
 	}
 
-	async deleteProduct(id) {
+	async delete(id) {
 		await this.#repository.deleteDataByIdentifier({ key: "id", value: id });
 	}
 }

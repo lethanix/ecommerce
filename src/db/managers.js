@@ -4,14 +4,14 @@ import {
 	PRODUCT_REPOSITORY_NAME,
 	USER_REPOSITORY_NAME,
 } from "../utils.js";
-import FsCartManager from "./filesystem/cart.manager.js";
-import FsProductManager from "./filesystem/product.manager.js";
-import MongoCartManager from "./mongo/cart.manager.js";
+import FsCartDao from "./filesystem/cart.dao.js";
+import FsProductDao from "./filesystem/product.dao.js";
+import MongoCartDao from "./mongo/cart.dao.js";
 import cartsModel from "./mongo/models/cart.js";
 import productsModel from "./mongo/models/product.js";
 import usersModel from "./mongo/models/user.js";
-import MongoProductManager from "./mongo/product.manager.js";
-import MongoUserManager from "./mongo/user.manager.js";
+import MongoProductDao from "./mongo/product.dao.js";
+import MongoUserDao from "./mongo/user.dao.js";
 
 /**
  * Object containing the reference to the models for
@@ -35,20 +35,20 @@ export function getModel(name) {
 }
 
 function productService() {
-	if (DB_TYPE === "fs") return new FsProductManager(PRODUCT_REPOSITORY_NAME);
+	if (DB_TYPE === "fs") return new FsProductDao(PRODUCT_REPOSITORY_NAME);
 	if (DB_TYPE === "mongo")
-		return new MongoProductManager(PRODUCT_REPOSITORY_NAME);
+		return new MongoProductDao(PRODUCT_REPOSITORY_NAME);
 }
 
 function cartService() {
-	if (DB_TYPE === "fs") return new FsCartManager(CART_REPOSITORY_NAME);
-	if (DB_TYPE === "mongo") return new MongoCartManager(CART_REPOSITORY_NAME);
+	if (DB_TYPE === "fs") return new FsCartDao(CART_REPOSITORY_NAME);
+	if (DB_TYPE === "mongo") return new MongoCartDao(CART_REPOSITORY_NAME);
 }
 
 function userService() {
 	if (DB_TYPE === "fs")
 		return new Error("FileSystem Manager for Users is not implemented");
-	if (DB_TYPE === "mongo") return new MongoUserManager(USER_REPOSITORY_NAME);
+	if (DB_TYPE === "mongo") return new MongoUserDao(USER_REPOSITORY_NAME);
 }
 
 export function managerService(managerName) {

@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
 	try {
 		// Get the product object data and added to db/filesystem
 		const formData = req.body;
-		const result = await productService.addProduct(formData);
+		const result = await productService.add(formData);
 
 		req.io.emit("server:product:added", result);
 		res.send({ status: "Success", payload: result });
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
 	try {
 		const pid = req.params.pid;
-		await productService.deleteProduct(pid);
+		await productService.delete(pid);
 
 		req.io.emit("server:product:deleted", pid);
 		res.send({ status: "Successful", message: "Product deleted" });

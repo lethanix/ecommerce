@@ -68,7 +68,7 @@ router.get("/:pid", async (req, res) => {
 	const pid = req.params.pid;
 
 	try {
-		const product = await productService.getProductById(pid);
+		const product = await productService.getById(pid);
 		res.json(product);
 	} catch (productIdError) {
 		return res
@@ -79,7 +79,7 @@ router.get("/:pid", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		const result = await productService.addProduct(req.body);
+		const result = await productService.add(req.body);
 
 		res
 			.status(200)
@@ -96,7 +96,7 @@ router.put("/:pid", async (req, res) => {
 	req.body.id = pid;
 
 	try {
-		const result = await productService.updateProduct(req.body);
+		const result = await productService.update(req.body);
 
 		res.status(200).send({
 			status: "Successful",
@@ -114,7 +114,7 @@ router.delete("/:pid", async (req, res) => {
 	const pid = req.params.pid;
 
 	try {
-		await productService.deleteProduct(pid);
+		await productService.delete(pid);
 		res.status(200).send({ status: "Successful", message: "Product deleted" });
 	} catch (deleteProductError) {
 		return res

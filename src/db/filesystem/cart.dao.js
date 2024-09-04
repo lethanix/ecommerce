@@ -1,7 +1,7 @@
 import repositoryService from "../../repositories/repositories.js";
 import Cart from "../filesystem/models/cart.js";
 
-export default class CartManager {
+export default class CartDao {
 	#repository;
 
 	/**
@@ -20,7 +20,7 @@ export default class CartManager {
 	 * Create a new cart and add it to the repository
 	 *
 	 */
-	async addCart() {
+	async add() {
 		const newCart = new Cart();
 		const result = await this.#repository.addData(newCart);
 

@@ -8,7 +8,7 @@ const productService = managerService("product");
 // Render the list of the current products
 router.get("/products", async (req, res) => {
 	try {
-		const products = await productService.getProducts();
+		const products = await productService.getAll();
 
 		res.render("index", { products: products });
 	} catch (productsRenderError) {
@@ -19,7 +19,7 @@ router.get("/products", async (req, res) => {
 // Realtime rendering of the products using web sockets
 router.get("/realtimeproducts", async (req, res) => {
 	try {
-		const products = await productService.getProducts();
+		const products = await productService.getAll();
 
 		res.render("realTimeProducts", { products: products });
 	} catch (realtimeRenderError) {

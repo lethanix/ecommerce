@@ -21,7 +21,7 @@ const initializePassportConfig = () => {
 				}
 
 				// Verify if the user is not registered
-				const user = await usersService.getUserByEmail(email);
+				const user = await usersService.getByEmail(email);
 				if (user) {
 					return done(null, false, { message: "User already exists" });
 				}
@@ -43,7 +43,7 @@ const initializePassportConfig = () => {
 					birthDate: parsedDate,
 				};
 
-				const result = await usersService.createUser(newUser);
+				const result = await usersService.create(newUser);
 
 				return done(null, result);
 			},
@@ -57,7 +57,7 @@ const initializePassportConfig = () => {
 			{ usernameField: "email" },
 			async (email, password, done) => {
 				// Validate user existence in the db
-				const user = await usersService.getUserByEmail(email);
+				const user = await usersService.getByEmail(email);
 				if (!user) {
 					return done(null, false, {
 						message: "Username or password is incorrect",

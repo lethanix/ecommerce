@@ -1,19 +1,19 @@
 import usersModel from "./models/user.js";
 
-export default class UserManager {
+export default class UserDao {
 	getUsers() {
 		return usersModel.find();
 	}
 
-	getUserById(uid) {
+	getById(uid) {
 		return usersModel.findById(uid);
 	}
 
-	getUserByEmail(email) {
+	getByEmail(email) {
 		return usersModel.findOne({ email });
 	}
 
-	createUser(user) {
+	create(user) {
 		return usersModel.create(user);
 	}
 }
