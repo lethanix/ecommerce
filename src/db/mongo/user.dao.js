@@ -1,19 +1,24 @@
+import UserDtoMongoCreate from "../../dto/user/user.dto.mongoCreate.js";
+import UserDtoMongoSearch from "../../dto/user/user.dto.mongoSearch.js";
 import usersModel from "./models/user.js";
 
 export default class UserDao {
-	getUsers() {
+	get() {
 		return usersModel.find();
 	}
 
-	getById(uid) {
-		return usersModel.findById(uid);
+	getById(user) {
+		const { _id } = new UserDtoMongoSearch(user);
+		return usersModel.findById(_id);
 	}
 
-	getByEmail(email) {
+	getByEmail(user) {
+		const { email } = new UserDtoMongoSearch(user);
 		return usersModel.findOne({ email });
 	}
 
 	create(user) {
-		return usersModel.create(user);
+		const parsedUser = new UserDtoMongoCreate(user);
+		return usersModel.create(parsedUser);
 	}
 }

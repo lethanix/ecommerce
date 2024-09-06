@@ -4,7 +4,6 @@ import cartsModel from "./models/cart.js";
 import productsModel from "./models/product.js";
 import usersModel from "./models/user.js";
 
-
 /**
  * Implementation of the MongoRepository class to save data
  * in MongoDB using Mongoose

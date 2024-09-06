@@ -32,12 +32,12 @@ const current = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    res.clearCookie("chaosCookie").render("login");
-}
+	res.clearCookie("chaosCookie").render("login");
+};
 
 export default {
 	register,
 	login,
 	current,
-    logout
+	logout,
 };
