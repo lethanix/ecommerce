@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
-import { getModel } from "../db/managers.js";
-import { ATLAS_URI } from "../utils.js";
+import { ATLAS_URI } from "../../utils.js";
+import cartsModel from "./models/cart.js";
+import productsModel from "./models/product.js";
+import usersModel from "./models/user.js";
+
 
 /**
  * Implementation of the MongoRepository class to save data
@@ -145,4 +148,25 @@ export default class MongoRepository {
 
 		return value;
 	}
+}
+
+/**
+ * Object containing the reference to the models for
+ * file system and mongoDB repositories
+ */
+const models = {
+	productsModel,
+	cartsModel,
+	usersModel,
+};
+
+/**
+ * Factory function to obtain the proper model
+ *
+ * @param {String} name - Name of the model/class to get (i.e., product or cart)
+ * @returns Reference to model
+ */
+function getModel(name) {
+	const modelName = `${name.toLocaleLowerCase()}Model`;
+	return models[modelName];
 }

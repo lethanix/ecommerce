@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from "node:fs";
 import * as fs from "node:fs/promises";
 import path from "node:path";
-import { __filespath } from "../utils.js";
+import { __filespath } from "../../utils.js";
 
 /**
  * Implementation of the FileRepository class to save data
