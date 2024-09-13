@@ -1,56 +1,48 @@
-import repositoryService from "../../repositories/repositories.js";
+import { IdDtoMongo } from "../../dto/id.dto.mongo.js";
+import productModel from "./models/product.js";
 
 export default class ProductDao {
-	#repository;
-
-	constructor(collection) {
-		if (!collection) {
-			throw new Error("Collection name is not provided");
-		}
-		this.#repository = repositoryService(collection);
+	async create(product) {
+		const parsedProduct = new IdDtoMongo(product);
+		return productModel.create(parsedProduct);
 	}
 
-	async add(product) {
-		// Unique code is needed for each product
-		const isCodeUnique = await this.#repository.getDataByIdentifier({
-			key: "code",
-			value: product.code,
-		});
-		if (isCodeUnique != null) {
-			throw new Error(`Product Code ${product.code} is not unique.`);
-		}
-
-		const result = await this.#repository.addData(product);
-		return result._id;
+	async getById(product) {
+		const { _id } = new IdDtoMongo(product);
+		return productModel.findById(_id);
 	}
 
-	async getProducts(filter = {}, opts = {}) {
-		return await this.#repository.getData(filter, opts);
+	async getByCode(code) {
+		const dataIdentified = await productModel.findOne({ code: code });
+		return dataIdentified || null;
 	}
 
-	async getById(id) {
-		const product = await this.#repository.getDataByIdentifier({
-			key: "id",
-			value: id,
-		});
+	async list(filter = {}, opts = {}) {
+		return await productModel.paginate(filter, opts);
+	}
 
-		if (product === null) {
-			throw new Error(`Unable to retrieve product with id ${id}`);
+	async update(pid, update) {
+		if (pid === undefined) {
+			throw new Error("Please provide the product ID that needs to be updated");
 		}
 
-		return product;
+		if (update === undefined) {
+			throw new Error("Please provide the information to update the product");
+		}
+
+		const result = await productModel.updateOne({ _id: pid }, update);
+
+		if (!result.acknowledged) {
+			return new Error(`Product ${pid} was not updated`);
+		}
+
+		return pid;
 	}
 
-	async update(product) {
-		const identifier = { key: "id", value: product.id };
-		const result = await this.#repository.updateDataByIdentifier(
-			identifier,
-			product,
-		);
-		return result;
-	}
-
-	async delete(id) {
-		await this.#repository.deleteDataByIdentifier({ key: "id", value: id });
+	async delete(product) {
+		const { _id } = new IdDtoMongo(product);
+		const result = productModel.deleteOne({ _id: _id });
+		if (result.deletedCount === 0)
+			return new Error(`Product ${_id} was not deleted`);
 	}
 }

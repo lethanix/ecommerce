@@ -44,7 +44,7 @@ function deleteProduct(event) {
 }
 
 /**
- * Function to update the UI
+ * Function to updateAllProducts the UI
  * @param {Product} product - Creates the HTML element of a product
  * @returns {HTMLDivElement} div - Returns the div element created
  */

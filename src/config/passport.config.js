@@ -2,10 +2,9 @@ import passport from "passport";
 import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
 import { Strategy as LocalStrategy } from "passport-local";
 
-import { managerService } from "../db/managers.js";
 import AuthService from "../services/auth.js";
 import { SESSION_SECRET } from "../utils.js";
-const usersService = managerService("users");
+import {usersService} from "../services/entity.services.js";
 
 const initializePassportConfig = () => {
 	//*** Register Strategy
@@ -43,7 +42,7 @@ const initializePassportConfig = () => {
 					birthDate: parsedDate,
 				};
 
-				const result = await usersService.create(newUser);
+				const result = await usersService.add(newUser);
 
 				return done(null, result);
 			},
@@ -97,7 +96,7 @@ const initializePassportConfig = () => {
 };
 
 function cookieExtractor(req) {
-	return req?.cookies?.["chaosCookie"];
+	return req?.cookies?.chaosCookie;
 }
 
 export default initializePassportConfig;

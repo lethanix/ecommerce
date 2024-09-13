@@ -17,7 +17,7 @@ export default class CartDao {
 	}
 
 	/**
-	 * Create a new cart and add it to the repository
+	 * Create a new cart and createCart it to the repository
 	 *
 	 */
 	async add() {
@@ -29,7 +29,7 @@ export default class CartDao {
 
 	/**
 	 * Add a product to cart with the given ID
-	 * @param {String} cartId ID of the cart to update
+	 * @param {String} cartId ID of the cart to updateAllProducts
 	 * @param {String} productId ID of the product to be added to the cart
 	 */
 	async addProduct(cartId, productId) {

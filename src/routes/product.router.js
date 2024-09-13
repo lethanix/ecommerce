@@ -1,9 +1,8 @@
 import express from "express";
-import { managerService } from "../db/managers.js";
 import { PORT } from "../utils.js";
+import {productsService} from "../services/entity.services.js";
 
 export const router = express.Router();
-const productService = managerService("product");
 
 router.get("/", async (req, res) => {
 	try {
@@ -32,7 +31,7 @@ router.get("/", async (req, res) => {
 			// lean: true, // Use it when we need to send the data to the view (dehydration)
 		};
 
-		const paginationData = await productService.getProducts({}, options);
+		const paginationData = await productsService.getProducts({}, options);
 
 		const prevPage = paginationData.prevPage;
 		const nextPage = paginationData.nextPage;
@@ -68,7 +67,7 @@ router.get("/:pid", async (req, res) => {
 	const pid = req.params.pid;
 
 	try {
-		const product = await productService.getById(pid);
+		const product = await productsService.getById(pid);
 		res.json(product);
 	} catch (productIdError) {
 		return res
@@ -79,7 +78,7 @@ router.get("/:pid", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		const result = await productService.add(req.body);
+		const result = await productsService.add(req.body);
 
 		res
 			.status(200)
@@ -96,7 +95,7 @@ router.put("/:pid", async (req, res) => {
 	req.body.id = pid;
 
 	try {
-		const result = await productService.update(req.body);
+		const result = await productsService.update(req.body);
 
 		res.status(200).send({
 			status: "Successful",
@@ -114,7 +113,7 @@ router.delete("/:pid", async (req, res) => {
 	const pid = req.params.pid;
 
 	try {
-		await productService.delete(pid);
+		await productsService.delete(pid);
 		res.status(200).send({ status: "Successful", message: "Product deleted" });
 	} catch (deleteProductError) {
 		return res

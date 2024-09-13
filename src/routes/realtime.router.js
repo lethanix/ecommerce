@@ -1,14 +1,13 @@
 import { Router } from "express";
-import { managerService } from "../db/managers.js";
+import {productsService} from "../services/entity.services.js";
 
 export const router = Router();
-const productService = managerService("product");
 
 router.post("/", async (req, res) => {
 	try {
 		// Get the product object data and added to db/filesystem
 		const formData = req.body;
-		const result = await productService.add(formData);
+		const result = await productsService.add(formData);
 
 		req.io.emit("server:product:added", result);
 		res.send({ status: "Success", payload: result });
@@ -21,7 +20,7 @@ router.post("/", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
 	try {
 		const pid = req.params.pid;
-		await productService.delete(pid);
+		await productsService.delete(pid);
 
 		req.io.emit("server:product:deleted", pid);
 		res.send({ status: "Successful", message: "Product deleted" });

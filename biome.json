@@ -10,6 +10,6 @@
 		}
 	},
 	"files": {
-		"ignore": ["public/js/htmx.min.js"]
+		"ignore": ["public/js/*.js"]
 	}
 }

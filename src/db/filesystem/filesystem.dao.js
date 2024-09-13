@@ -142,7 +142,7 @@ export default class FileRepository {
 	}
 
 	/**
-	 * Find the object that matches with the identifier to update it.
+	 * Find the object that matches with the identifier to updateAllProducts it.
 	 *
 	 * @param {Object} identifier - The identifier to use to find the data
 	 * @param {string} identifier.key - The name of the key to use as an identifier
@@ -151,7 +151,9 @@ export default class FileRepository {
 	 */
 	async updateDataByIdentifier(identifier, update) {
 		if (identifier.key === undefined || identifier.value === undefined) {
-			throw new Error("Please provide an identifier to update the data");
+			throw new Error(
+				"Please provide an identifier to updateAllProducts the data",
+			);
 		}
 
 		if (update === undefined) {

@@ -1,16 +1,16 @@
 import { Router } from "express";
 import passport from "passport";
-import { managerService } from "../db/managers.js";
+import {productsService} from "../services/entity.services.js";
+import ProductDtoPresentPaginated from "../dto/product/product.dto.presentPaginated.js";
 
 export const router = Router();
-const productService = managerService("product");
 
 // Render the list of the current products
 router.get("/products", async (req, res) => {
 	try {
-		const products = await productService.getAll();
+		const {parsedProducts} = await productsService.getProducts();
 
-		res.render("index", { products: products });
+		res.render("index", { products: parsedProducts });
 	} catch (productsRenderError) {
 		res.status(400).send({ status: "Error", error: `${productsRenderError}` });
 	}
@@ -19,9 +19,9 @@ router.get("/products", async (req, res) => {
 // Realtime rendering of the products using web sockets
 router.get("/realtimeproducts", async (req, res) => {
 	try {
-		const products = await productService.getAll();
+		const {parsedProducts} = await productsService.getProducts();
 
-		res.render("realTimeProducts", { products: products });
+		res.render("realTimeProducts", { products: parsedProducts });
 	} catch (realtimeRenderError) {
 		res.status(400).send({ status: "Error", error: `${realtimeRenderError}` });
 	}

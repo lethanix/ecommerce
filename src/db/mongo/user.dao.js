@@ -1,4 +1,4 @@
-import UserDtoMongoCreate from "../../dto/user/user.dto.mongoCreate.js";
+import { IdDtoMongo } from "../../dto/id.dto.mongo.js";
 import UserDtoMongoSearch from "../../dto/user/user.dto.mongoSearch.js";
 import usersModel from "./models/user.js";
 
@@ -18,7 +18,6 @@ export default class UserDao {
 	}
 
 	create(user) {
-		const parsedUser = new UserDtoMongoCreate(user);
-		return usersModel.create(parsedUser);
+		return usersModel.create(user);
 	}
 }

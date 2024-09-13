@@ -1,15 +1,14 @@
 import express from "express";
-import { managerService } from "../db/managers.js";
+import {cartsService} from "../services/entity.services.js";
 
 export const router = express.Router();
-const cartService = managerService("cart");
 
 /**
  * Create new cart
  */
 router.post("/", async (_, res) => {
 	try {
-		const cid = await cartService.add();
+		const cid = await cartsService.add();
 		res
 			.status(200)
 			.send({ status: "Successful", message: "Cart added", cid: cid });
@@ -25,7 +24,7 @@ router.get("/:cid", async (req, res) => {
 	const cid = req.params.cid;
 
 	try {
-		const products = await cartService.getProducts(cid);
+		const products = await cartsService.getProducts(cid);
 		res.json(products);
 	} catch (cartIdError) {
 		return res.status(400).send({ status: "Error", error: `${cartIdError}` });
@@ -36,7 +35,7 @@ router.post("/:cid/products/:pid", async (req, res) => {
 	const { cid, pid } = req.params;
 
 	try {
-		const result = await cartService.addProduct(cid, pid);
+		const result = await cartsService.addProduct(cid, pid);
 		res.status(200).send({
 			status: "Successful",
 			message: `Product ${pid} added to cart`,
@@ -51,7 +50,7 @@ router.delete("/:cid/products/:pid", async (req, res) => {
 	const { cid, pid } = req.params;
 
 	try {
-		const result = await cartService.deleteProduct(cid, pid);
+		const result = await cartsService.deleteProduct(cid, pid);
 		res.status(200).send({
 			status: "Successful",
 			message: `Product ${pid} deleted from the cart`,
@@ -68,7 +67,7 @@ router.delete("/:cid", async (req, res) => {
 	const cid = req.params.cid;
 
 	try {
-		const result = await cartService.deleteAllProducts(cid);
+		const result = await cartsService.deleteAllProducts(cid);
 		res.status(200).send({
 			status: "Successful",
 			message: "All products deleted from the cart",
@@ -86,7 +85,7 @@ router.put("/:cid", async (req, res) => {
 	const products = req.body.products;
 
 	try {
-		const result = await cartService.updateCart(cid, products);
+		const result = await cartsService.updateCart(cid, products);
 		res.status(200).send({
 			status: "Successful",
 			message: "Cart products updated",
@@ -104,7 +103,7 @@ router.put("/:cid/products/:pid", async (req, res) => {
 	const quantity = req.body.quantity;
 
 	try {
-		const result = await cartService.updateProduct(cid, pid, quantity);
+		const result = await cartsService.updateProduct(cid, pid, quantity);
 		res.status(200).send({
 			status: "Successful",
 			message: `Product quantity updated to ${quantity}`,
